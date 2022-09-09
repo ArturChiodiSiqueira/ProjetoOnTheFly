@@ -8,5 +8,12 @@ namespace ProjetoOnTheFly
 {
     internal class Aeronave
     {
+        public string Inscricao { get; set; }
+        public int Capacidade { get; set; }
+        public int AssentosOcupados { get; set; }
+        public string UltimaVenda { get; set; }
+        public string DataCadastro { get; set; }
+        public char Situacao { get; set; }
+
     }
 }
