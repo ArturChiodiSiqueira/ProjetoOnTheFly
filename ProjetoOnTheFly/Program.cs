@@ -47,7 +47,7 @@ namespace ProjetoOnTheFly
 
                         case "1":
                             Console.Clear();
-
+                            Passageiro passageiro = new();
                             break;
 
                         case "2":
@@ -62,7 +62,7 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
-                            //CadastraAeronave();
+                            
                             break;
 
                         case "5":
