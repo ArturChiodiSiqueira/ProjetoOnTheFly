@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace ProjetoOnTheFly
 
         public Aeronave()
         {
-
         }
 
         public Aeronave(string inscricao, int capacidade, int assentosOcupados, string ultimaVenda, string dataCadastro, char situacao)
@@ -32,35 +32,46 @@ namespace ProjetoOnTheFly
 
         public void CadastraAeronave()
         {
-            
+            Console.WriteLine(">>> CADSTRO DE AERONAVE <<<");
             do
             {
                 Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
-                Inscricao = Console.ReadLine();
-            } while (true);
+                Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", " ");
+            } while (Inscricao.Length != 6);
 
-            Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
-            Capacidade = int.Parse(Console.ReadLine());
-
-            //preencher a prop assentos ocupados com base na quantidade de passagens vendidas para o voo em que a aeronave ira atuar
-            AssentosOcupados = 0;
-            while (AssentosOcupados < Capacidade)
+            do
             {
-                AssentosOcupados++;
-            }
+                Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
+                Capacidade = int.Parse(Console.ReadLine());
+            } while (Capacidade < 0 && Capacidade > 999);
 
-            UltimaVenda = DateTime.Now.ToShortDateString();
+            #region
+            ////preencher a prop assentos ocupados com base na quantidade de passagens vendidas para o voo em que a aeronave ira atuar
+            //AssentosOcupados = 0;
+            //while (AssentosOcupados < Capacidade)
+            //{
+            //    AssentosOcupados++;
+            //}
+            #endregion
 
-            DataCadastro = DateTime.Now.ToShortDateString();
+            AssentosOcupados = 0;
+
+            UltimaVenda = DateTime.Now.ToShortDateString().Replace("/", "");
+
+            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
 
             Situacao = 'A';
+            string caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
+            string texto = $"{ToString()}\n";
+            File.AppendAllText(caminho, texto);
 
-            Console.WriteLine("Aaeronave cadastrada, Status: A - Ativo");
+            Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
+            Console.ReadKey();
         }
 
         public override string ToString()
         {
-            return base.ToString(); 
+            return $"{Inscricao}{Capacidade}{AssentosOcupados}{UltimaVenda}{DataCadastro}{Situacao}";
         }
     }
 }
