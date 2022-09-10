@@ -87,7 +87,7 @@ namespace ProjetoOnTheFly
             string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
             string texto =$"{ToString()}\n";
             File.AppendAllText(caminho, texto);
-            Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
+            Console.WriteLine("\nCADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
         }
 

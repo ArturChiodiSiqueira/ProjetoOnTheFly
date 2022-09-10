@@ -30,7 +30,7 @@ namespace ProjetoOnTheFly
                 Console.Write("\n\tInforme a opcao: ");
                 opcao = Console.ReadLine();
 
-                if (opcao != "0" && opcao != "1" && opcao != "3" && opcao != "4" && opcao != "5" && opcao != "6" && opcao != "7" && opcao != "8")
+                if (opcao != "0" && opcao != "1" && opcao != "2" && opcao != "3" && opcao != "4" && opcao != "5" && opcao != "6" && opcao != "7" && opcao != "8")
                 {
                     Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
                     Console.ReadKey();
@@ -52,6 +52,7 @@ namespace ProjetoOnTheFly
 
                         case "2":
                             Console.Clear();
+                            CompanhiaAerea companhia = new();
 
                             break;
 

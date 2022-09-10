@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProjetoOnTheFly
@@ -13,11 +15,67 @@ namespace ProjetoOnTheFly
         public string DataAbertura { get; set; }
         public string UltimoVoo { get; set; }
         public string DataCadastro { get; set; }
-        public char Situacao { get; set; }
+        public string Situacao { get; set; }
 
         public CompanhiaAerea()
         {
+            Console.WriteLine(">>> CADSTRO DE COMPANHIA AEREA <<<");
+            Console.WriteLine("Para cancelar o cadastro digite 0:\n");
+            do
+            {
+                Console.Write("Digite seu CNPJ: ");
+                Cnpj = Console.ReadLine().Replace(".", "").Replace("-", "").Replace("/", "");
+                if (Cnpj == "0")
+                    return;
+                if (!ValidaCNPJ(Cnpj))
+                {
+                    Console.WriteLine("Digite um CNPJ Válido!");
+                    Thread.Sleep(2000);
+                }
+            } while (!ValidaCNPJ(Cnpj));
 
+            Console.Write("Digite a Razão Social:  (Max 50 caracteres): ");
+            RazaoSocial = Console.ReadLine();
+            if (RazaoSocial == "0")
+                return;
+            if (RazaoSocial.Length > 50)
+            {
+                Console.WriteLine("Infome uma Razão Social menor que 50 caracteres!!!!");
+                Thread.Sleep(2000);
+            }
+            while (RazaoSocial.Length > 50) ;
+
+            for (int i = RazaoSocial.Length; i <= 50; i++)
+                RazaoSocial += " ";
+
+            Console.Write("Digite a data de abertura: ");
+            DateTime dataAbertura;
+            while (!DateTime.TryParse(Console.ReadLine(), out dataAbertura))
+            {
+                Console.WriteLine("Formato de data incorreto!");
+                Console.Write("Digite a data de abertura: ");
+            }
+
+            DataAbertura = dataAbertura.ToShortDateString().Replace("/", "");
+            if (DataAbertura == "0")
+                return;
+
+            UltimoVoo = DateTime.Now.ToShortDateString().Replace("/", "");
+
+            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
+
+            Situacao = "A";
+
+            string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\CompanhiaAerea.dat";
+            string texto = $"{ToString()}\n";
+            File.AppendAllText(caminho, texto);
+            Console.WriteLine("\nCADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
+            Console.ReadKey();
+
+        }
+        public override string ToString()
+        {
+            return $"{Cnpj}{RazaoSocial}{DataAbertura}{UltimoVoo}{DataCadastro}{Situacao}";
         }
 
         public bool ValidaCNPJ(string vrCNPJ)
@@ -79,7 +137,6 @@ namespace ProjetoOnTheFly
 
                 }
                 return (CNPJOk[0] && CNPJOk[1]);
-
             }
             catch
             {
