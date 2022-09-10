@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace ProjetoOnTheFly
             do
             {
                 Console.Write("Digite seu CPF: ");
-                Cpf = Console.ReadLine();
+                Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
                 if (Cpf == "0")
                     return;
                 if (!ValidaCPF(Cpf))
@@ -53,8 +54,12 @@ namespace ProjetoOnTheFly
             Console.Write("Digite sua data de nascimento: ");
             DateTime dataNasc;
             while (!DateTime.TryParse(Console.ReadLine(), out dataNasc))
+            {
                 Console.WriteLine("Formato de data incorreto!");
-            DataNascimento = dataNasc.ToShortDateString();  
+                Console.Write("Digite sua data de nascimento: ");
+            }
+            
+            DataNascimento = dataNasc.ToShortDateString().Replace("/", "");
 
             do
             {
@@ -67,20 +72,31 @@ namespace ProjetoOnTheFly
                 }
             } while (Sexo != "m" && Sexo != "n" && Sexo != "f");
 
-            UltimaCompra = DateTime.Now.ToShortDateString();
+            UltimaCompra = DateTime.Now.ToShortDateString().Replace("/", "");
 
-            DataCadastro = DateTime.Now.ToShortDateString();
+            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
 
             Situacao = "A";
 
             Console.WriteLine(ToString());
             Console.ReadKey();
+
+
+            string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
+            string texto = ToString();
+            File.AppendAllText(caminho, texto);
         }
 
         public override string ToString()
         {
             return $"{Cpf}{Nome}{DataNascimento}{Sexo}{UltimaCompra}{DataCadastro}{Situacao}";
         }
+
+        
+        
+           
+
+       
 
         private static bool ValidaCPF(string vrCPF)
 
@@ -149,9 +165,6 @@ namespace ProjetoOnTheFly
                 return false;
 
             return true;
-
         }
-
     }
-
 }
