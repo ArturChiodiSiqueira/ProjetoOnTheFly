@@ -39,6 +39,8 @@ namespace ProjetoOnTheFly
             {
                 Console.Write("Digite seu Nome (Max 50 caracteres): ");
                 Nome = Console.ReadLine();
+                if (Nome == "0")
+                    return;
                 if (Nome.Length > 50)
                 {
                     Console.WriteLine("Infome um nome menor que 50 caracteres!!!!");
@@ -60,11 +62,15 @@ namespace ProjetoOnTheFly
             }
             
             DataNascimento = dataNasc.ToShortDateString().Replace("/", "");
+            if (DataNascimento == "0")
+                return;
 
             do
             {
                 Console.WriteLine("Digite seu sexo [M] Masculino / [F] Feminino / [N] Prefere não informar: ");
                 Sexo = Console.ReadLine().ToLower();
+                if (Sexo == "0")
+                    return;
                 if (Sexo != "m" && Sexo != "n" && Sexo != "f")
                 {
                     Console.WriteLine("Digite um opção válida!!!");
@@ -78,26 +84,17 @@ namespace ProjetoOnTheFly
 
             Situacao = "A";
 
-            Console.WriteLine(ToString());
-            Console.ReadKey();
-
-
             string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
-            string texto = ToString();
+            string texto =$"{ToString()}\n";
             File.AppendAllText(caminho, texto);
+            Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
+            Console.ReadKey();
         }
 
         public override string ToString()
         {
             return $"{Cpf}{Nome}{DataNascimento}{Sexo}{UltimaCompra}{DataCadastro}{Situacao}";
         }
-
-        
-        
-           
-
-       
-
         private static bool ValidaCPF(string vrCPF)
 
         {
