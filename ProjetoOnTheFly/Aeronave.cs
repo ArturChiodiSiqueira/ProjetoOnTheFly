@@ -36,7 +36,7 @@ namespace ProjetoOnTheFly
             do
             {
                 Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
-                Inscricao = Console.ReadLine();
+                Inscricao = Console.ReadLine().Trim().Replace("-", "");
             } while (true);
 
             Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
