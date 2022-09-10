@@ -49,8 +49,13 @@ namespace ProjetoOnTheFly
                 AssentosOcupados++;
             }
 
+            UltimaVenda = DateTime.Now.ToShortDateString();
 
+            DataCadastro = DateTime.Now.ToShortDateString();
 
+            Situacao = 'A';
+
+            Console.WriteLine("Aaeronave cadastrada, Status: A - Ativo");
         }
 
         public override string ToString()
