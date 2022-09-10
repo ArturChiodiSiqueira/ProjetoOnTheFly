@@ -101,6 +101,7 @@ namespace ProjetoOnTheFly
             int capacidade = int.Parse(Console.ReadLine());
 
 
+
             //Aeronave aeronave = new Aeronave();
         }
     }
