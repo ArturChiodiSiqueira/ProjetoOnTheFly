@@ -61,7 +61,7 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
-
+                            CadastraAeronave();
                             break;
 
                         case "5":
@@ -86,6 +86,22 @@ namespace ProjetoOnTheFly
                     }
                 }
             } while (true);
+        }
+
+        static void CadastraAeronave()
+        {
+            string Inscricao;
+            do
+            {
+                Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
+                Inscricao = Console.ReadLine();
+            } while (true);
+
+            Console.Write("Informe a capacidade de pessoas da aeronave: ");
+            int capacidade = int.Parse(Console.ReadLine());
+
+
+            //Aeronave aeronave = new Aeronave();
         }
     }
 }

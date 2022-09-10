@@ -15,5 +15,14 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public char Situacao { get; set; }
 
+        public Aeronave()
+        {
+
+        }
+
+        public override string ToString()
+        {
+            return base.ToString(); 
+        }
     }
 }
