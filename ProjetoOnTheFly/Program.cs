@@ -16,15 +16,16 @@ namespace ProjetoOnTheFly
             do
             {
                 Console.Clear();
+                Console.WriteLine(">>> AEROPORTO ON THE FLY <<<\n");
                 Console.WriteLine("°°°  MENU  INICIAL  °°°");
-                Console.WriteLine("opção 0 : sair");
-                Console.WriteLine("opção 1 : cadastrar passaageiro");
-                Console.WriteLine("opção 2 : cadastrar companhia aerea");
-                Console.WriteLine("opção 4 : cadastrar aeronave");
-                Console.WriteLine("opção 5 : bloqueados");
-                Console.WriteLine("opção 6 : registro de voo");
-                Console.WriteLine("opção 7 : registro de passagem");
-                Console.WriteLine("opção 8 : venda de passagem");
+                Console.WriteLine("\nOpção 1 : Cadastrar passageiro");
+                Console.WriteLine("Opção 2 : Cadastrar companhia aerea");
+                Console.WriteLine("Opção 4 : Cadastrar aeronave");
+                Console.WriteLine("Opção 5 : Bloqueados");
+                Console.WriteLine("Opção 6 : Registro de voo");
+                Console.WriteLine("Opção 7 : Registro de passagem");
+                Console.WriteLine("Opção 8 : Venda de passagem");
+                Console.WriteLine("Opção 0 : Sair");
 
                 Console.Write("\n\tInforme a opcao: ");
                 opcao = Console.ReadLine();
@@ -61,7 +62,7 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
-                            CadastraAeronave();
+                            //CadastraAeronave();
                             break;
 
                         case "5":
@@ -86,23 +87,6 @@ namespace ProjetoOnTheFly
                     }
                 }
             } while (true);
-        }
-
-        static void CadastraAeronave()
-        {
-            string Inscricao;
-            do
-            {
-                Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
-                Inscricao = Console.ReadLine();
-            } while (true);
-
-            Console.Write("Informe a capacidade de pessoas da aeronave: ");
-            int capacidade = int.Parse(Console.ReadLine());
-
-
-
-            //Aeronave aeronave = new Aeronave();
         }
     }
 }
