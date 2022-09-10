@@ -20,6 +20,30 @@ namespace ProjetoOnTheFly
 
         }
 
+        public Aeronave(string inscricao, int capacidade, int assentosOcupados, string ultimaVenda, string dataCadastro, char situacao)
+        {
+            Inscricao = inscricao;
+            Capacidade = capacidade;
+            AssentosOcupados = assentosOcupados;
+            UltimaVenda = ultimaVenda;
+            DataCadastro = dataCadastro;
+            Situacao = situacao;
+        }
+
+        public void CadastraAeronave()
+        {
+            string Inscricao;
+            do
+            {
+                Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
+                Inscricao = Console.ReadLine();
+            } while (true);
+
+            Console.Write("Informe a capacidade de pessoas da aeronave: ");
+            int capacidade = int.Parse(Console.ReadLine());
+
+        }
+
         public override string ToString()
         {
             return base.ToString(); 
