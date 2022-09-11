@@ -18,7 +18,18 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public string Situacao { get; set; }
 
+        string caminho = "C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
         public Passageiro()
+        {
+           
+        }
+
+        public override string ToString()
+        {
+            return $"{Cpf}{Nome}{DataNascimento}{Sexo}{UltimaCompra}{DataCadastro}{Situacao}";
+        }
+
+        public void CadastraPassageiro()
         {
             Console.WriteLine(">>> CADSTRO DE PASSAGEIRO <<<");
             Console.WriteLine("Para cancelar o cadastro digite 0:\n");
@@ -34,6 +45,13 @@ namespace ProjetoOnTheFly
                     Thread.Sleep(2000);
                 }
             } while (!ValidaCPF(Cpf));
+
+            if (VerificaPassageiro(this.caminho, Cpf))
+            {
+                Console.WriteLine("Este CPF já está cadastrado!!");
+                Thread.Sleep(3000);
+                return;
+            }
 
             do
             {
@@ -53,15 +71,15 @@ namespace ProjetoOnTheFly
 
 
 
-            Console.Write("Digite sua data de nascimento: ");
+            Console.Write("Digite sua data de nascimento (Mês/Dia/Ano): ");
             DateTime dataNasc;
             while (!DateTime.TryParse(Console.ReadLine(), out dataNasc))
             {
                 Console.WriteLine("Formato de data incorreto!");
-                Console.Write("Digite sua data de nascimento: ");
+                Console.Write("Digite sua data de nascimento (Mês/Dia/Ano): ");
             }
-            
-            DataNascimento = dataNasc.ToShortDateString().Replace("/", "");
+
+            DataNascimento = dataNasc.ToString("ddMMyyyy");
             if (DataNascimento == "0")
                 return;
 
@@ -78,22 +96,111 @@ namespace ProjetoOnTheFly
                 }
             } while (Sexo != "m" && Sexo != "n" && Sexo != "f");
 
-            UltimaCompra = DateTime.Now.ToShortDateString().Replace("/", "");
+            UltimaCompra = DateTime.Now.ToString("ddMMyyyy");
 
-            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
+            DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
             Situacao = "A";
 
             string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
-            string texto =$"{ToString()}\n";
+            string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
+
             Console.WriteLine("\nCADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
         }
 
-        public override string ToString()
+        public void AlteraDadoPassageiro()
         {
-            return $"{Cpf}{Nome}{DataNascimento}{Sexo}{UltimaCompra}{DataCadastro}{Situacao}";
+            string caminho = this.caminho;
+
+            Console.Write("Digite o CPF: ");
+            string cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
+
+
+            string[] lines = File.ReadAllLines(caminho);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains(cpf))
+                {
+                    string num;
+                    do
+                    {
+                        Console.WriteLine("Para alterar digite:\n\n[1] Nome\n[2] Data de Nascimento\n[3] Sexo\n[4] Última Compra\n[5] Situação do Cadastro");
+                        num = Console.ReadLine();
+
+                        if(num != "1" && num != "2" && num != "3" && num != "4" && num != "5")
+                            Console.WriteLine("Opção inválida!");
+
+                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "5");
+
+                    switch (num)
+                    {
+                        case "1":
+                            do
+                            {
+                                Console.Write("Digite seu Nome (Max 50 caracteres): ");
+                                Nome = Console.ReadLine();
+                                if (Nome == "0")
+                                    return;
+                                if (Nome.Length > 50)
+                                {
+                                    Console.WriteLine("Infome um nome menor que 50 caracteres!!!!");
+                                    Thread.Sleep(2000);
+                                }
+                            } while (Nome.Length > 50);
+
+                            for (int j = Nome.Length; j <= 50; j++)
+                                Nome += " ";
+                            
+                            lines[i] = lines[i].Replace(lines[i].Substring(11, 50), Nome);
+                            
+                            Console.WriteLine("Nome alterado com sucesso!");
+
+                           
+                            break;  
+                    }
+                }
+            }
+            for(int i = 0; i < lines.Length; i++)
+                File.WriteAllText(caminho, lines[i]);
+            Console.WriteLine("gravou");
+            Console.ReadKey();  
+        }
+
+        public bool VerificaPassageiro(string caminho, string cpf)
+        { 
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(cpf))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        public void ImprimePassageiro(string caminho, string cpf)
+        {
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(cpf))
+                {
+                    Console.WriteLine($"CPF: {line.Substring(0, 11)}");
+                    Console.WriteLine($"Nome: {line.Substring(11, 50)}");
+                    Console.WriteLine($"Data de Nascimento: {line.Substring(62, 2)}/{line.Substring(64, 2)}/{line.Substring(66, 4)}");
+                    Console.WriteLine($"Sexo: {line.Substring(70, 1).ToUpper()}");
+                    Console.WriteLine($"Ùltima compra: {line.Substring(71, 2)}/{line.Substring(73, 2)}/{line.Substring(75, 4)}");
+                    Console.WriteLine($"Data do Cadastro: {line.Substring(79, 2)}/{line.Substring(81, 2)}/{line.Substring(83, 4)}");
+                    if (line.Substring(87, 1).Contains("A"))
+                        Console.WriteLine($"Situação: Ativo");
+                    else
+                        Console.WriteLine($"Situação: Desativado");
+
+                }
+            }
         }
         private static bool ValidaCPF(string vrCPF)
 

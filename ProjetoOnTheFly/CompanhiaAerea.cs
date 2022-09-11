@@ -34,6 +34,24 @@ namespace ProjetoOnTheFly
                 }
             } while (!ValidaCNPJ(Cnpj));
 
+            Console.Write("Digite a data de abertura (Mês/Dia/Ano): ");
+            DateTime dataAbertura;
+            while (!DateTime.TryParse(Console.ReadLine(), out dataAbertura))
+            {
+                Console.WriteLine("Formato de data incorreto!");
+                Console.Write("Digite a data de abertura (Mês/Dia/Ano): ");
+            }
+            DateTime verData = dataAbertura;
+            if (verData > DateTime.Now.AddMonths(-6))
+            {
+                Console.WriteLine("Não é possível cadastrar empresas com menos de 6 meses!!!");
+                Thread.Sleep(2000);
+                return;
+            }
+            DataAbertura = dataAbertura.ToString("ddMMyyyy");
+            if (DataAbertura == "0")
+                return;
+
             Console.Write("Digite a Razão Social:  (Max 50 caracteres): ");
             RazaoSocial = Console.ReadLine();
             if (RazaoSocial == "0")
@@ -48,21 +66,11 @@ namespace ProjetoOnTheFly
             for (int i = RazaoSocial.Length; i <= 50; i++)
                 RazaoSocial += " ";
 
-            Console.Write("Digite a data de abertura: ");
-            DateTime dataAbertura;
-            while (!DateTime.TryParse(Console.ReadLine(), out dataAbertura))
-            {
-                Console.WriteLine("Formato de data incorreto!");
-                Console.Write("Digite a data de abertura: ");
-            }
 
-            DataAbertura = dataAbertura.ToShortDateString().Replace("/", "");
-            if (DataAbertura == "0")
-                return;
 
-            UltimoVoo = DateTime.Now.ToShortDateString().Replace("/", "");
+            UltimoVoo = DateTime.Now.ToString("ddMMyyyy");
 
-            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
+            DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
             Situacao = "A";
 
