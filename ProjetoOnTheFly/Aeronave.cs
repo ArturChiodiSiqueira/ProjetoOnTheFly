@@ -21,6 +21,7 @@ namespace ProjetoOnTheFly
 
         public Aeronave()
         {
+
         }
 
         public Aeronave(string inscricao, int capacidade, int assentosOcupados, string ultimaVenda, string dataCadastro, char situacao)
