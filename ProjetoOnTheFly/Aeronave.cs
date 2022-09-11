@@ -16,6 +16,8 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public char Situacao { get; set; }
 
+        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
+
         public Aeronave()
         {
         }
@@ -32,7 +34,7 @@ namespace ProjetoOnTheFly
 
         public void CadastraAeronave()
         {
-            Console.WriteLine(">>> CADSTRO DE AERONAVE <<<");
+            Console.WriteLine(">>> CADASTRO DE AERONAVE <<<");
             
             CadastraIdAeronave();
 
@@ -40,16 +42,16 @@ namespace ProjetoOnTheFly
             {
                 Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
                 Capacidade = int.Parse(Console.ReadLine());
-            } while (Capacidade < 0 && Capacidade > 999); //perguntar!! n ta dando certo... ta cadastrando aeronave com mais de 999
+            } while (Capacidade < 0 | Capacidade > 999);
 
             AssentosOcupados = 0;
 
-            UltimaVenda = DateTime.Now.ToShortDateString().Replace("/", "");
+            UltimaVenda = DateTime.Now.ToString("ddMMyyyy");
 
-            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
+            DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
             Situacao = 'A';
-            string caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
+            string caminho = Caminho;
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
 
@@ -62,9 +64,29 @@ namespace ProjetoOnTheFly
             do
             {
                 Console.Write("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
-                Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", " ");
-            } while (Inscricao.Length != 6);
+                Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
+            } while (Inscricao.Length != 5);
         }
+
+        public static bool LocalizarAeronave(string inscricao)
+        {
+            bool inscricaoEncontrada = false;
+            foreach (string line in File.ReadLines($"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat"))
+            {
+                if (line.Contains(inscricao))
+                {
+                    Console.WriteLine("Aeroporto encontrado");
+                    inscricaoEncontrada = true;
+                    break;
+                }
+            }
+            if (inscricaoEncontrada == false)
+            {
+                Console.WriteLine("Aeroporto não encontrado");
+            }
+            return inscricaoEncontrada;
+        }
+
 
         public override string ToString()
         {

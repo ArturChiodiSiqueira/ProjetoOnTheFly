@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProjetoOnTheFly
@@ -11,17 +12,21 @@ namespace ProjetoOnTheFly
     {
         public string Id { get; set; }
         public string Destino { get; set; }
-        public Aeronave IdAeronave { get; set; }
+        public string IdAeronave { get; set; }
         public string DataVoo { get; set; }
         public string DataCadastro { get; set; }
         public char Situacao { get; set; }
+
+        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Voo.dat";
+        string CaminhoIata = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\ListaIatas.dat";
+        string CaminhoAeronave = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
 
         public Voo()
         {
 
         }
 
-        public Voo(string id, string destino, Aeronave idAeronave, string dataVoo, string dataCadastro, char situacao)
+        public Voo(string id, string destino, string idAeronave, string dataVoo, string dataCadastro, char situacao)
         {
             Id = id;
             Destino = destino;
@@ -31,19 +36,62 @@ namespace ProjetoOnTheFly
             Situacao = situacao;
         }
 
+        public bool BuscarIata(string iata)
+        {
+            string caminho = CaminhoIata;
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(iata))
+                {
+                    Console.WriteLine("Aeroporto encontrado!");
+                    Thread.Sleep(2000);
+                    return true;
+                }
+            }
+            Console.WriteLine("Aeroporto não encontrado!");
+            Thread.Sleep(2000);
+            return false;
+        }
+
+        public bool BuscarAeronave(string inscricaoInformada)
+        {
+            string caminho = CaminhoAeronave;
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(inscricaoInformada))
+                {
+                    Console.WriteLine("Aeronave encontrada!");
+                    IdAeronave = line.Substring(0, 5);
+                    Thread.Sleep(2000);
+                    return true;
+                }
+            }
+            Console.WriteLine("Aeronave não encontrada!");
+            Thread.Sleep(2000);
+            return false;
+        }
+
         public void CadastrarVoo()
         {
-            GerarIdVoo();
+            Console.WriteLine(">>> CADASTRO DE VOO <<<");
 
-            //destino
             Console.Write("Informe a IATA do aeroporto de destino (XXX): ");
+            string iata = Console.ReadLine().ToUpper();
+            Destino = iata;
+            if (!BuscarIata(iata))
+            {
+                return;
+            }
 
-            //id da aeronave
-            // perguntar!! preciso saber se a aeronave existe... para isso consultar no arquivo.
-            Console.WriteLine("Informe a inscrição da aeronave que irá realizar o voo: ");
-            
+            string inscricaoInformada;
+            do
+            {
+                Console.WriteLine("Informe a inscrição da aeronave que irá realizar o voo: ");
+                inscricaoInformada = Console.ReadLine().ToUpper().Trim().Replace("-", "");
+            } while (!BuscarAeronave(inscricaoInformada));
+            IdAeronave = inscricaoInformada;
 
-            
+            GerarIdVoo();
 
             Console.Write("Informe a data de partida do voo: ");
             DateTime dataVoo;
@@ -59,16 +107,15 @@ namespace ProjetoOnTheFly
                 Console.Write("Informe a hora de partida do voo: ");
             }
 
-            DataVoo = dataVoo.ToShortDateString().Replace("/", "") + horaVoo.ToShortTimeString().Replace(":", "");
+            DataVoo = dataVoo.ToString("ddMMyyyy") + horaVoo.ToString("HHmm");
 
-            DataCadastro = DateTime.Now.ToShortDateString().Replace("/", "");
+            DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
             Situacao = 'A';
 
-            string caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Voo.dat";
+            string caminho = Caminho;
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
-
 
             Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
@@ -79,7 +126,8 @@ namespace ProjetoOnTheFly
             Random random = new Random();
             Id = "V" + random.Next(0001, 9999).ToString();
 
-            foreach (string linha in File.ReadLines($"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Voo.dat"))
+            string caminho = Caminho;
+            foreach (string linha in File.ReadLines(caminho))
             {
                 if (linha.Contains("Voo") & linha.Contains(Id))
                 {
