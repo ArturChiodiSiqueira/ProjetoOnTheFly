@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProjetoOnTheFly
@@ -67,26 +68,6 @@ namespace ProjetoOnTheFly
                 Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
             } while (Inscricao.Length != 5);
         }
-
-        public static bool LocalizarAeronave(string inscricao)
-        {
-            bool inscricaoEncontrada = false;
-            foreach (string line in File.ReadLines($"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat"))
-            {
-                if (line.Contains(inscricao))
-                {
-                    Console.WriteLine("Aeroporto encontrado");
-                    inscricaoEncontrada = true;
-                    break;
-                }
-            }
-            if (inscricaoEncontrada == false)
-            {
-                Console.WriteLine("Aeroporto não encontrado");
-            }
-            return inscricaoEncontrada;
-        }
-
 
         public override string ToString()
         {
