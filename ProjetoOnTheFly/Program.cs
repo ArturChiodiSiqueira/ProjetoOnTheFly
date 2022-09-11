@@ -122,7 +122,8 @@ namespace ProjetoOnTheFly
 
                         case "6":
                             Console.Clear();
-
+                            Voo voo = new Voo();
+                            voo.CadastrarVoo();
                             break;
 
                         case "7":

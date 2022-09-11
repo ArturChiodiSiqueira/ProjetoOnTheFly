@@ -33,26 +33,14 @@ namespace ProjetoOnTheFly
         public void CadastraAeronave()
         {
             Console.WriteLine(">>> CADSTRO DE AERONAVE <<<");
-            do
-            {
-                Console.WriteLine("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
-                Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", " ");
-            } while (Inscricao.Length != 6);
+            
+            CadastraIdAeronave();
 
             do
             {
                 Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
                 Capacidade = int.Parse(Console.ReadLine());
-            } while (Capacidade < 0 && Capacidade > 999);
-
-            #region
-            ////preencher a prop assentos ocupados com base na quantidade de passagens vendidas para o voo em que a aeronave ira atuar
-            //AssentosOcupados = 0;
-            //while (AssentosOcupados < Capacidade)
-            //{
-            //    AssentosOcupados++;
-            //}
-            #endregion
+            } while (Capacidade < 0 && Capacidade > 999); //perguntar!! n ta dando certo... ta cadastrando aeronave com mais de 999
 
             AssentosOcupados = 0;
 
@@ -67,6 +55,15 @@ namespace ProjetoOnTheFly
 
             Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
+        }
+
+        public void CadastraIdAeronave()
+        {
+            do
+            {
+                Console.Write("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
+                Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", " ");
+            } while (Inscricao.Length != 6);
         }
 
         public override string ToString()
