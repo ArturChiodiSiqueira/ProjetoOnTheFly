@@ -36,8 +36,15 @@ namespace ProjetoOnTheFly
         public void CadastraAeronave()
         {
             Console.WriteLine(">>> CADASTRO DE AERONAVE <<<");
-            
+
             CadastraIdAeronave();
+
+            if (VerificaAeronave(Caminho, Inscricao))
+            {
+                Console.WriteLine("Esta Aeronave já está cadastrada!!");
+                Thread.Sleep(3000);
+                return;
+            }
 
             do
             {
@@ -58,6 +65,20 @@ namespace ProjetoOnTheFly
 
             Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
+        }
+
+        
+
+        public bool VerificaAeronave(string caminho, string inscricao)
+        {
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(inscricao))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void CadastraIdAeronave()
