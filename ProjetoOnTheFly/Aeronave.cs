@@ -65,6 +65,9 @@ namespace ProjetoOnTheFly
 
             Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
+
+            ImprimeAeronave(caminho, Inscricao);
+            Console.ReadKey();
         }
 
         public bool VerificaAeronave(string caminho, string inscricao)
@@ -94,7 +97,7 @@ namespace ProjetoOnTheFly
             {
                 if (line.Contains(inscricao))
                 {
-                    Console.WriteLine($"Inscrição: {line.Substring(0, 5)}");
+                    Console.WriteLine($"\nInscrição: {line.Substring(0, 2)}-{line.Substring(2, 3)}");
                     Console.WriteLine($"Capacidade: {line.Substring(5, 3)}");
                     Console.WriteLine($"Assentos ocupados: {line.Substring(8, 1)}");
                     Console.WriteLine($"Ultima venda: {line.Substring(9, 2)}/{line.Substring(11, 2)}/{line.Substring(13, 4)}");
