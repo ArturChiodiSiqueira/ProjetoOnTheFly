@@ -153,18 +153,17 @@ namespace ProjetoOnTheFly
 
                             for (int j = Nome.Length; j <= 50; j++)
                                 Nome += " ";
-                            
-                            lines[i] = lines[i].Replace(lines[i].Substring(11, 50), Nome);
+
+                            lines[i]= lines[i].Replace(lines[i].Substring(11,Nome.Length),Nome);
                             
                             Console.WriteLine("Nome alterado com sucesso!");
-
                            
                             break;  
                     }
                 }
             }
-            for(int i = 0; i < lines.Length; i++)
-                File.WriteAllText(caminho, lines[i]);
+            
+            File.WriteAllLines(caminho,lines);
             Console.WriteLine("gravou");
             Console.ReadKey();  
         }
