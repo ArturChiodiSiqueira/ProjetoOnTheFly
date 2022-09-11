@@ -119,6 +119,9 @@ namespace ProjetoOnTheFly
 
             Console.WriteLine("\n CADASTRO REALIZADO COM SUCESSO!\nPressione Enter para continuar...");
             Console.ReadKey();
+
+            ImprimeVoo(caminho, Id);
+            Console.ReadKey();
         }
 
         public void GerarIdVoo()
@@ -132,6 +135,25 @@ namespace ProjetoOnTheFly
                 if (linha.Contains("Voo") & linha.Contains(Id))
                 {
                     Console.WriteLine(linha);
+                }
+            }
+        }
+
+        public void ImprimeVoo(string caminho, string id)
+        {
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(id))
+                {
+                    Console.WriteLine($"\nId: {line.Substring(0, 5)}");
+                    Console.WriteLine($"Destino: {line.Substring(5, 3)}");
+                    Console.WriteLine($"Inscrição da aeronave: {line.Substring(8, 2)}-{line.Substring(10, 3)}");
+                    Console.WriteLine($"Data e hora do voo: {line.Substring(13, 2)}/{line.Substring(15, 2)}/{line.Substring(17, 4)} às {line.Substring(21, 2)}:{line.Substring(23, 2)}");
+                    Console.WriteLine($"Data do Cadastro: {line.Substring(25, 2)}/{line.Substring(27, 2)}/{line.Substring(29, 4)}");
+                    if (line.Substring(33, 1).Contains("A"))
+                        Console.WriteLine($"Situação: Ativo");
+                    else
+                        Console.WriteLine($"Situação: Desativado");
                 }
             }
         }
