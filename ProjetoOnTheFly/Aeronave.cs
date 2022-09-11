@@ -111,6 +111,11 @@ namespace ProjetoOnTheFly
             }
         }
 
+        //public void AlteraDadoAeronave()
+        //{
+        //    
+        //}
+
         public override string ToString()
         {
             return $"{Inscricao}{Capacidade}{AssentosOcupados}{UltimaVenda}{DataCadastro}{Situacao}";
