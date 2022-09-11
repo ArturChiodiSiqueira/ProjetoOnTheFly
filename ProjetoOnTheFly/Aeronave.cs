@@ -67,8 +67,6 @@ namespace ProjetoOnTheFly
             Console.ReadKey();
         }
 
-        
-
         public bool VerificaAeronave(string caminho, string inscricao)
         {
             foreach (string line in File.ReadLines(caminho))
@@ -88,6 +86,25 @@ namespace ProjetoOnTheFly
                 Console.Write("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
                 Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
             } while (Inscricao.Length != 5);
+        }
+
+        public void ImprimeAeronave(string caminho, string inscricao)
+        {
+            foreach (string line in File.ReadLines(caminho))
+            {
+                if (line.Contains(inscricao))
+                {
+                    Console.WriteLine($"Inscrição: {line.Substring(0, 5)}");
+                    Console.WriteLine($"Capacidade: {line.Substring(5, 3)}");
+                    Console.WriteLine($"Assentos ocupados: {line.Substring(8, 1)}");
+                    Console.WriteLine($"Ultima venda: {line.Substring(9, 2)}/{line.Substring(11, 2)}/{line.Substring(13, 4)}");
+                    Console.WriteLine($"Data do Cadastro: {line.Substring(17, 2)}/{line.Substring(19, 2)}/{line.Substring(21, 4)}");
+                    if (line.Substring(25, 1).Contains("A"))
+                        Console.WriteLine($"Situação: Ativo");
+                    else
+                        Console.WriteLine($"Situação: Desativado");
+                }
+            }
         }
 
         public override string ToString()
