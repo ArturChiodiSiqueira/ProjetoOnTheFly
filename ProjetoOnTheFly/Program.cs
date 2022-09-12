@@ -40,6 +40,7 @@ namespace ProjetoOnTheFly
                 else
                 {
                     Passageiro passageiro = new();
+                    CompanhiaAerea c = new();
                     switch (opcao)
                     {
                         case "0":
@@ -69,6 +70,7 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
+                            c.CadCompanhia();
                             
                             break;
 

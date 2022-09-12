@@ -10,15 +10,15 @@ namespace ProjetoOnTheFly
 {
     internal class Passageiro
     {
-        public string Cpf { get; set; }
-        public string Nome { get; set; }
-        public string DataNascimento { get; set; }
-        public string Sexo { get; set; }
-        public string UltimaCompra { get; set; }
-        public string DataCadastro { get; set; }
-        public string Situacao { get; set; }
+        private string Cpf { get; set; }
+        private string Nome { get; set; }
+        private string DataNascimento { get; set; }
+        private string Sexo { get; set; }
+        private string UltimaCompra { get; set; }
+        private string DataCadastro { get; set; }
+        private string Situacao { get; set; }
 
-        //caminho para acessar o arquivo de passageiros
+        //Caminho para acessar o arquivo de passageiros
         string caminho = "C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
         public Passageiro()
         {
