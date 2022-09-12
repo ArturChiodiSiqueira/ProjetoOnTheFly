@@ -298,8 +298,6 @@ namespace ProjetoOnTheFly
                         Console.WriteLine($"Situação: Ativo");
                     else
                         Console.WriteLine($"Situação: Desativado");
-                    Console.ReadKey();
-
                 }
             }
         }

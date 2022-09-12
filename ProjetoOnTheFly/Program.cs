@@ -76,11 +76,13 @@ namespace ProjetoOnTheFly
 
                         case "5":
                             Console.Clear();
+                            c.AlteraCompanhia();
 
                             break;
 
                         case "6":
                             Console.Clear();
+                            c.ImprCompanhia();
 
                             break;
 
