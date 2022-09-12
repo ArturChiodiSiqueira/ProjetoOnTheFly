@@ -22,11 +22,11 @@ namespace ProjetoOnTheFly
                 Console.WriteLine("opção 1 : menu cadastro");
                 Console.WriteLine("opção 2 : menu localizar");
                 Console.WriteLine("opção 3 : menu editar");
-               
+
                 Console.Write("\n\tInforme a opcao: ");
                 opcao = Console.ReadLine();
 
-                if (opcao != "0" && opcao != "1" && opcao != "3")
+                if (opcao != "0" && opcao != "1" && opcao != "2" && opcao != "3")
                 {
                     Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
                     Console.ReadKey();
@@ -68,7 +68,7 @@ namespace ProjetoOnTheFly
                 Console.Clear();
                 Console.WriteLine("°°°  MENU  CADASTRO  °°°");
                 Console.WriteLine("opção 0 : sair");
-                Console.WriteLine("opção 1 : cadastrar passaageiro");
+                Console.WriteLine("opção 1 : cadastrar passageiro");
                 Console.WriteLine("opção 2 : cadastrar companhia aerea");
                 Console.WriteLine("opção 4 : cadastrar aeronave");
                 Console.WriteLine("opção 5 : cadstrar bloqueados");
@@ -88,6 +88,8 @@ namespace ProjetoOnTheFly
 
                 else
                 {
+                    Aeronave aeronave = new Aeronave();
+                    Voo voo = new Voo();
                     switch (opcao)
                     {
                         case "0":
@@ -111,7 +113,6 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
-                            Aeronave aeronave = new Aeronave();
                             aeronave.CadastraAeronave();
                             break;
 
@@ -122,7 +123,7 @@ namespace ProjetoOnTheFly
 
                         case "6":
                             Console.Clear();
-
+                            voo.CadastrarVoo();
                             break;
 
                         case "7":
@@ -158,7 +159,7 @@ namespace ProjetoOnTheFly
                 Console.Write("\n\tInforme a opcao: ");
                 opcao = Console.ReadLine();
 
-                if (opcao != "0" && opcao != "1" && opcao != "3" && opcao != "4" && opcao != "5" && opcao != "6" && opcao != "7" && opcao != "8")
+                if (opcao != "0" && opcao != "1" && opcao != "2" && opcao != "3" && opcao != "4" && opcao != "5" && opcao != "6" && opcao != "7" && opcao != "8")
                 {
                     Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
                     Console.ReadKey();
@@ -167,6 +168,8 @@ namespace ProjetoOnTheFly
 
                 else
                 {
+                    Aeronave aeronave = new Aeronave();
+                    Voo voo = new Voo();
                     switch (opcao)
                     {
                         case "0":
@@ -190,7 +193,7 @@ namespace ProjetoOnTheFly
 
                         case "4":
                             Console.Clear();
-                            
+                            aeronave.ImprimeAeronaves();
                             break;
 
                         case "5":
@@ -200,7 +203,7 @@ namespace ProjetoOnTheFly
 
                         case "6":
                             Console.Clear();
-
+                            voo.ImprimeVoos();
                             break;
 
                         case "7":
@@ -219,63 +222,65 @@ namespace ProjetoOnTheFly
 
         static void MostrarMenuEditar()
         {
-                string opcao;
-                do
+            string opcao;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("°°°  MENU  EDITAR  °°°");
+                Console.WriteLine("opção 0 : sair");
+                Console.WriteLine("opção 1 : editar passageiro");
+                Console.WriteLine("opção 2 : editar companhia aerea");
+                Console.WriteLine("opção 3 : editar aeronave");
+                Console.WriteLine("opção 4 : editar voo");
+                Console.WriteLine("opção 5 : editar passagem");
+
+                Console.Write("\n\tInforme a opcao: ");
+                opcao = Console.ReadLine();
+
+                if (opcao != "0" && opcao != "1" && opcao != "3" && opcao != "4" && opcao != "5")
                 {
+                    Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
+                    Console.ReadKey();
                     Console.Clear();
-                    Console.WriteLine("°°°  MENU  EDITAR  °°°");
-                    Console.WriteLine("opção 0 : sair");
-                    Console.WriteLine("opção 1 : editar passageiro");
-                    Console.WriteLine("opção 2 : editar companhia aerea");
-                    Console.WriteLine("opção 3 : editar aeronave");
-                    Console.WriteLine("opção 4 : editar voo");
-                    Console.WriteLine("opção 5 : editar passagem");
+                }
 
-                    Console.Write("\n\tInforme a opcao: ");
-                    opcao = Console.ReadLine();
-
-                    if (opcao != "0" && opcao != "1" && opcao != "3" && opcao != "4" && opcao != "5")
+                else
+                {
+                    Aeronave aeronave = new Aeronave();
+                    Voo voo = new Voo();
+                    switch (opcao)
                     {
-                        Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
-                        Console.ReadKey();
-                        Console.Clear();
+                        case "0":
+                            Environment.Exit(0);
+                            break;
+
+                        case "1":
+                            Console.Clear();
+
+                            break;
+
+                        case "2":
+                            Console.Clear();
+
+                            break;
+
+                        case "3":
+                            Console.Clear();
+                            aeronave.AlteraDadoAeronave();
+                            break;
+
+                        case "4":
+                            Console.Clear();
+                            voo.AlteraDadoVoo();
+                            break;
+
+                        case "5":
+                            Console.Clear();
+
+                            break;
                     }
-
-                    else
-                    {
-                        switch (opcao)
-                        {
-                            case "0":
-                                Environment.Exit(0);
-                                break;
-
-                            case "1":
-                                Console.Clear();
-
-                                break;
-
-                            case "2":
-                                Console.Clear();
-
-                                break;
-
-                            case "3":
-                                Console.Clear();
-
-                                break;
-
-                            case "4":
-                                Console.Clear();
-
-                                break;
-
-                            case "5":
-                                Console.Clear();
-
-                                break;
-                        }
-                    }
-                } while (true);
-            }
+                }
+            } while (true);
+        }
     }
 }
