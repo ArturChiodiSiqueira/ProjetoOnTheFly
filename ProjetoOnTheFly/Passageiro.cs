@@ -18,27 +18,26 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public string Situacao { get; set; }
 
+        //caminho para acessar o arquivo de passageiros
         string caminho = "C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
         public Passageiro()
         {
            
         }
-
         public override string ToString()
         {
             return $"{Cpf}{Nome}{DataNascimento}{Sexo}{UltimaCompra}{DataCadastro}{Situacao}";
         }
 
-        public void CadastraPassageiro()
+        //Cadastra o CPF
+        public bool CadastraCpf()
         {
-            Console.WriteLine(">>> CADSTRO DE PASSAGEIRO <<<");
-            Console.WriteLine("Para cancelar o cadastro digite 0:\n");
             do
             {
                 Console.Write("Digite seu CPF: ");
                 Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
                 if (Cpf == "0")
-                    return;
+                    return false;
                 if (!ValidaCPF(Cpf))
                 {
                     Console.WriteLine("Digite um CPF Válido!");
@@ -50,15 +49,19 @@ namespace ProjetoOnTheFly
             {
                 Console.WriteLine("Este CPF já está cadastrado!!");
                 Thread.Sleep(3000);
-                return;
+                return false;
             }
-
+            return true;    
+        }
+        //Cadastra o Nome
+        public bool CadastraNome()
+        {
             do
             {
                 Console.Write("Digite seu Nome (Max 50 caracteres): ");
                 Nome = Console.ReadLine();
                 if (Nome == "0")
-                    return;
+                    return false;
                 if (Nome.Length > 50)
                 {
                     Console.WriteLine("Infome um nome menor que 50 caracteres!!!!");
@@ -68,33 +71,78 @@ namespace ProjetoOnTheFly
 
             for (int i = Nome.Length; i <= 50; i++)
                 Nome += " ";
-
-
-
+            return true;
+        }
+        //Cadastra a data de nascimento
+        public bool CadastraDataNasc()
+        {
             Console.Write("Digite sua data de nascimento (Mês/Dia/Ano): ");
             DateTime dataNasc;
             while (!DateTime.TryParse(Console.ReadLine(), out dataNasc))
             {
+                if (DataNascimento.Contains("0"))
+                    return false;
                 Console.WriteLine("Formato de data incorreto!");
                 Console.Write("Digite sua data de nascimento (Mês/Dia/Ano): ");
             }
 
             DataNascimento = dataNasc.ToString("ddMMyyyy");
-            if (DataNascimento == "0")
-                return;
-
+            return true;
+        }
+        //Cadastra o sexo do passageiro
+        public bool CadastraSexo()
+        {
             do
             {
                 Console.WriteLine("Digite seu sexo [M] Masculino / [F] Feminino / [N] Prefere não informar: ");
-                Sexo = Console.ReadLine().ToLower();
+                Sexo = Console.ReadLine().ToUpper();
                 if (Sexo == "0")
-                    return;
-                if (Sexo != "m" && Sexo != "n" && Sexo != "f")
+                    return false;
+                if (Sexo != "M" && Sexo != "N" && Sexo != "F")
                 {
                     Console.WriteLine("Digite um opção válida!!!");
                     Thread.Sleep(2000);
                 }
-            } while (Sexo != "m" && Sexo != "n" && Sexo != "f");
+            } while (Sexo != "M" && Sexo != "N" && Sexo != "F");
+            return true;    
+        }
+        //Altera a situação do cadastro do passageiro
+        public bool AlteraSituacao()
+        {
+            string num;
+            do
+            {
+                Console.Write("Alterar Situação [A] Ativo / [I] Inativo / [0] Cancelar: ");
+                num = Console.ReadLine().ToUpper();
+                if (num != "A" && num != "I" && num != "0")
+                {
+                    Console.WriteLine("Digite um opção válida!!!");
+                    Thread.Sleep(2000);
+                }
+            } while (num != "A" && num != "I" && num != "0");
+
+            if (num.Contains("0"))
+                return false;
+            Situacao = num;
+            return true;
+        }
+        //Cadastra um novo passageiro
+        public void CadastraPassageiro()
+        {
+            Console.WriteLine(">>> CADSTRO DE PASSAGEIRO <<<");
+            Console.WriteLine("Para cancelar o cadastro digite 0:\n");
+
+            if (!CadastraCpf())
+                return;
+
+            if (!CadastraNome())
+                return;
+
+            if (!CadastraDataNasc())
+                return;
+
+            if (!CadastraSexo())
+                return;
 
             UltimaCompra = DateTime.Now.ToString("ddMMyyyy");
 
@@ -102,6 +150,7 @@ namespace ProjetoOnTheFly
 
             Situacao = "A";
 
+            //Caminho para gravar o novo passageiro
             string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
@@ -110,14 +159,33 @@ namespace ProjetoOnTheFly
             Console.ReadKey();
         }
 
+        //Altera o cadastro do passageiro
         public void AlteraDadoPassageiro()
         {
-            string caminho = this.caminho;
+            string cpf;
+            do
+            {
+                string caminho = this.caminho;
+                Console.WriteLine(">>> ALTERAR DADOS DE PASSAGEIRO <<<\nPara sair digite 's'.\n");
+                Console.Write("Digite o CPF do passageiro: ");
+                cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
+                if (cpf == "s")
+                    return; 
 
-            Console.Write("Digite o CPF: ");
-            string cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
+                if (!ValidaCPF(cpf))
+                {
+                    Console.WriteLine("CPF inválido!");
+                    Thread.Sleep(3000);
+                }
+            } while (!ValidaCPF(cpf));    
 
-
+            if(!VerificaPassageiro(caminho, cpf))
+            {
+                Console.WriteLine("Passageiro não encontrado!!");
+                Thread.Sleep(3000);
+                return;
+            }
+            //Busca os dados de passageiros no arquivo
             string[] lines = File.ReadAllLines(caminho);
 
             for (int i = 0; i < lines.Length; i++)
@@ -127,47 +195,117 @@ namespace ProjetoOnTheFly
                     string num;
                     do
                     {
-                        Console.WriteLine("Para alterar digite:\n\n[1] Nome\n[2] Data de Nascimento\n[3] Sexo\n[4] Última Compra\n[5] Situação do Cadastro");
+                        Console.Clear();
+                        Console.WriteLine(">>> ALTERAR DADOS DE PASSAGEIRO <<<");
+                        Console.Write("Para alterar digite:\n\n[1] Nome\n[2] Data de Nascimento\n[3] Sexo\n[4] Situação do Cadastro\n[0] Sair\nOpção: ");
                         num = Console.ReadLine();
 
-                        if(num != "1" && num != "2" && num != "3" && num != "4" && num != "5")
+                        if(num != "1" && num != "2" && num != "3" && num != "4" && num != "0")
+                        {
                             Console.WriteLine("Opção inválida!");
+                            Thread.Sleep(3000);
+                        }
 
-                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "5");
+                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "0");
 
+                    if (num.Contains("0"))
+                        return;
+
+                    //Condição para alterar o dado em específico do passageiro
                     switch (num)
                     {
                         case "1":
-                            do
-                            {
-                                Console.Write("Digite seu Nome (Max 50 caracteres): ");
-                                Nome = Console.ReadLine();
-                                if (Nome == "0")
-                                    return;
-                                if (Nome.Length > 50)
-                                {
-                                    Console.WriteLine("Infome um nome menor que 50 caracteres!!!!");
-                                    Thread.Sleep(2000);
-                                }
-                            } while (Nome.Length > 50);
+                            if (!CadastraNome())
+                                return;
 
-                            for (int j = Nome.Length; j <= 50; j++)
-                                Nome += " ";
-
-                            lines[i]= lines[i].Replace(lines[i].Substring(11,Nome.Length),Nome);
+                            lines[i] = lines[i].Replace(lines[i].Substring(11,Nome.Length),Nome);
+                            break;
                             
-                            Console.WriteLine("Nome alterado com sucesso!");
-                           
-                            break;  
+                        case "2":
+                            if (!CadastraDataNasc())
+                                return;
+                            lines[i] = lines[i].Replace(lines[i].Substring(62, DataNascimento.Length), DataNascimento);
+                            break;
+
+                        case "3":
+                            if (!CadastraSexo())
+                                return;
+                            lines[i] = lines[i].Replace(lines[i].Substring(70, Sexo.Length), Sexo);
+                            break;
+
+                        case "4":
+                            if (!AlteraSituacao())
+                                return;
+                            lines[i] = lines[i].Replace(lines[i].Substring(87, Situacao.Length), Situacao);
+                            break;
                     }
+                    Console.WriteLine("Cadastro alterado com sucesso!");
+                    Thread.Sleep(3000);
                 }
             }
-            
+            //Salva os dados atualizados do passageiro
             File.WriteAllLines(caminho,lines);
-            Console.WriteLine("gravou");
-            Console.ReadKey();  
+        }
+        //Imprimi os passageiros cadastrados e ativos
+        public void ImprimiPassageiros()
+        {
+            string[] lines = File.ReadAllLines(caminho);
+            List<string> passageiros = new();
+           
+            for(int i = 1; i < lines.Length; i++)   
+            {
+                //Verifica se o cadastro esta ativo
+                if (lines[i].Substring(87, 1).Contains("A"))
+                    passageiros.Add(lines[i]);
+            }
+
+            //Laço para navegar nos cadastros de passageitos
+            for (int i = 0; i < passageiros.Count; i++)
+            {
+                string op;
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine(">>> Cadastro Passageiros <<<\nDigite para navegar:\n[1] Próximo Cadasatro\n[2] Cadastro Anterior" +
+                        "\n[3] Último cadastro\n[4] Voltar ao Início\n[0] Sair\n");
+
+                    Console.WriteLine($"Cadastro [{i+1}] de [{passageiros.Count}]");
+                    //Imprimi o primeiro da lista 
+                    LocalizaPassageiro(caminho, passageiros[i].Substring(0, 11));
+
+                    Console.Write("Opção: ");
+                    op = Console.ReadLine();
+
+                    if (op != "0" && op != "1" && op != "2" && op != "3" && op != "4")
+                    {
+                        Console.WriteLine("Opção inválida!");
+                        Thread.Sleep(2000);
+                    }
+                    //Sai do método
+                    else if (op.Contains("0"))
+                        return;
+
+                    //Volta no Cadastro Anterior
+                    else if (op.Contains("2"))
+                        if (i == 0)
+                            i = 0;
+                        else
+                            i--;
+
+                    //Vai para o fim da lista
+                    else if (op.Contains("3"))
+                        i = passageiros.Count-1;
+
+                    //Volta para o inicio da lista
+                    else if (op.Contains("4"))
+                        i = 0;
+                //Vai para o próximo da lista    
+                } while (op != "1");
+                i = 0;
+            }   
         }
 
+        //Verifica se o Cnpj já esta cadastrado
         public bool VerificaPassageiro(string caminho, string cpf)
         { 
             foreach (string line in File.ReadLines(caminho))
@@ -180,8 +318,8 @@ namespace ProjetoOnTheFly
             return false;
         }
 
-
-        public void ImprimePassageiro(string caminho, string cpf)
+        //localiza um passageiro em específico
+        public void LocalizaPassageiro(string caminho, string cpf)
         {
             foreach (string line in File.ReadLines(caminho))
             {
@@ -201,8 +339,8 @@ namespace ProjetoOnTheFly
                 }
             }
         }
+        //Valida o CPF
         private static bool ValidaCPF(string vrCPF)
-
         {
             string valor = vrCPF.Replace(".", "");
 

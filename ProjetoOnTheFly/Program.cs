@@ -39,6 +39,7 @@ namespace ProjetoOnTheFly
 
                 else
                 {
+                    Passageiro passageiro = new();
                     switch (opcao)
                     {
                         case "0":
@@ -47,21 +48,22 @@ namespace ProjetoOnTheFly
 
                         case "1":
                             Console.Clear();
-                            Passageiro passageiro = new();
+                           
                             passageiro.CadastraPassageiro();
                             break;
 
                         case "2":
                             Console.Clear();
-                            Passageiro pass = new();
-                            pass.AlteraDadoPassageiro();
+                           
+                            passageiro.AlteraDadoPassageiro();
                            
 
                             break;
 
                         case "3":
                             Console.Clear();
-                            Console.ReadKey();
+                           
+                            passageiro.ImprimiPassageiros();
 
                             break;
 
