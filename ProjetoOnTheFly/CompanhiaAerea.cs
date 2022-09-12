@@ -179,10 +179,10 @@ namespace ProjetoOnTheFly
                     {
                         Console.Clear();
                         Console.WriteLine(">>> ALTERAR DADOS DA COMPANHIA <<<");
-                        Console.Write("Para alterar digite:\n\n[1] Razão Social\n[2] Data de Abertura\n[3] Situação do Cadastro\n[0] Sair\nOpção: ");
+                        Console.Write("Para alterar digite:\n\n[1] Razão Social\n[2] Situação do Cadastro\n[0] Sair\nOpção: ");
                         num = Console.ReadLine();
 
-                        if (num != "1" && num != "2" && num != "3" && num != "0")
+                        if (num != "1" && num != "2" && num != "0")
                         {
                             Console.WriteLine("Opção inválida!");
                             Thread.Sleep(3000);
@@ -244,22 +244,22 @@ namespace ProjetoOnTheFly
                 {
                     Console.Clear();
                     Console.WriteLine(">>> Cadastro Passageiros <<<\nDigite para navegar:\n[1] Próximo Cadasatro\n[2] Cadastro Anterior" +
-                        "\n[3] Último cadastro\n[4] Voltar ao Início\n[0] Sair\n");
+                        "\n[3] Último cadastro\n[4] Voltar ao Início\n[s] Sair\n");
 
                     Console.WriteLine($"Cadastro [{i + 1}] de [{companhia.Count}]");
                     //Imprimi o primeiro da lista 
                     LocalCompanhia(caminho, companhia[i].Substring(0, 14));
 
                     Console.Write("Opção: ");
-                    op = Console.ReadLine();
+                    op = Console.ReadLine().ToLower();
 
-                    if (op != "0" && op != "1" && op != "2" && op != "3" && op != "4")
+                    if (op != "s" && op != "1" && op != "2" && op != "3" && op != "4")
                     {
                         Console.WriteLine("Opção inválida!");
                         Thread.Sleep(2000);
                     }
                     //Sai do método
-                    else if (op.Contains("0"))
+                    else if (op.Contains("s"))
                         return;
 
                     //Volta no Cadastro Anterior
@@ -278,7 +278,8 @@ namespace ProjetoOnTheFly
                         i = 0;
                     //Vai para o próximo da lista    
                 } while (op != "1");
-                i = 0;
+                if (i == companhia.Count - 1)
+                    i--;
             }
         }
 
