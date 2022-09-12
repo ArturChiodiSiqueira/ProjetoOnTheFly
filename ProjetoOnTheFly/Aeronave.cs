@@ -55,6 +55,7 @@ namespace ProjetoOnTheFly
 
             AssentosOcupados = 0;
 
+            UltimaVenda = DateTime.Now.ToString("ddMMyyyy");
 
             DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
@@ -99,15 +100,45 @@ namespace ProjetoOnTheFly
                 {
                     Console.WriteLine($"\nInscrição: {line.Substring(0, 2)}-{line.Substring(2, 3)}");
                     Console.WriteLine($"Capacidade: {line.Substring(5, 3)}");
-                    Console.WriteLine($"Assentos ocupados: {line.Substring(8, 1)}");
-                    Console.WriteLine($"Ultima venda: {line.Substring(9, 2)}/{line.Substring(11, 2)}/{line.Substring(13, 4)}");
-                    Console.WriteLine($"Data do Cadastro: {line.Substring(17, 2)}/{line.Substring(19, 2)}/{line.Substring(21, 4)}");
-                    if (line.Substring(25, 1).Contains("A"))
+                    Console.WriteLine($"Assentos ocupados: {line.Substring(8, 3)}");
+                    Console.WriteLine($"Ultima venda: {line.Substring(11, 2)}/{line.Substring(13, 2)}/{line.Substring(15, 4)}");
+                    Console.WriteLine($"Data do Cadastro: {line.Substring(19, 2)}/{line.Substring(21, 2)}/{line.Substring(23, 4)}");
+                    if (line.Substring(27, 1).Contains("A"))
                         Console.WriteLine($"Situação: Ativo");
                     else
                         Console.WriteLine($"Situação: Desativado");
                 }
             }
+        }
+
+        public Aeronave BuscaAeronave(string? inscricao, int? capacidade, int? assentosOcupados, string? ultimaVenda, string? dataCadastro, char? situacao)
+        {
+            foreach (string line in File.ReadLines(Caminho))
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                Aeronave aeronave = new Aeronave();
+                aeronave.Inscricao = line.Substring(0, 5);
+                aeronave.Capacidade = int.Parse(line.Substring(5, 3));
+                aeronave.AssentosOcupados = int.Parse(line.Substring(8, 3));
+                aeronave.UltimaVenda = DateTime.ParseExact(line.Substring(11, 8), "ddMMyyyy", null).ToString();
+                aeronave.DataCadastro = DateTime.ParseExact(line.Substring(19, 8), "ddMMyyyy", null).ToString();
+                aeronave.Situacao = char.Parse(line.Substring(27, 1));
+                if (
+                    (inscricao == null || aeronave.Inscricao == inscricao) &&
+                    (capacidade == null || aeronave.Capacidade == capacidade) &&
+                    (assentosOcupados == null || aeronave.AssentosOcupados == assentosOcupados) &&
+                    (ultimaVenda == null || aeronave.UltimaVenda == ultimaVenda) &&
+                    (dataCadastro == null || aeronave.DataCadastro == dataCadastro) &&
+                    (situacao == null || aeronave.Situacao == situacao)
+                    )
+                {
+                    return aeronave;
+                }
+            }
+            return null;
         }
 
         //public void AlteraDadoAeronave()
@@ -117,7 +148,7 @@ namespace ProjetoOnTheFly
 
         public override string ToString()
         {
-            return $"{Inscricao}{Capacidade}{AssentosOcupados}{UltimaVenda}{DataCadastro}{Situacao}";
+            return string.Format("{0}{1:000}{2:000}{3:ddMMyyyy}{4:ddMMyyyy}{5}", Inscricao, Capacidade, AssentosOcupados, UltimaVenda, DataCadastro, Situacao);
         }
     }
 }

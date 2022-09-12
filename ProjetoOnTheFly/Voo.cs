@@ -41,7 +41,7 @@ namespace ProjetoOnTheFly
             string caminho = CaminhoIata;
             foreach (string line in File.ReadLines(caminho))
             {
-                if (line.Contains(iata))
+                if (line.ToUpper().Contains(iata))
                 {
                     Console.WriteLine("Aeroporto encontrado!");
                     Thread.Sleep(2000);
