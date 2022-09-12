@@ -51,11 +51,10 @@ namespace ProjetoOnTheFly
             {
                 Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
                 Capacidade = int.Parse(Console.ReadLine());
-            } while (Capacidade < 0 | Capacidade > 999);
+            } while (Capacidade < 0 || Capacidade > 999);
 
             AssentosOcupados = 0;
 
-            UltimaVenda = DateTime.Now.ToString("ddMMyyyy");
 
             DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
