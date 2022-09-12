@@ -23,8 +23,8 @@ namespace ProjetoOnTheFly
                 Console.WriteLine("opção 2 : cadastrar companhia aerea");
                 Console.WriteLine("opção 4 : cadastrar aeronave");
                 Console.WriteLine("opção 5 : bloqueados");
-                Console.WriteLine("opção 6 : registro de voo");
-                Console.WriteLine("opção 7 : Menu de Passagem");
+                Console.WriteLine("opção 6 : Menu Restritos");
+                Console.WriteLine("opção 7 : Menu Bloqueados");
                 Console.WriteLine("opção 8 : Menu de Restrição (CPF/CNPJ");
 
                 Console.Write("\n\tInforme a opcao: ");
@@ -72,16 +72,20 @@ namespace ProjetoOnTheFly
 
                     case 6:
                         Console.Clear();
-
+                        Restrito rest = new();
+                        rest.GerarMenu();
                         break;
 
                     case 7:
-                        MenuPassagemVoo();
-
+                       Console.Clear();
+                        Bloqueado bloq = new();
+                        bloq.GerarMenu();
                         break;
 
                     case 8:
-                        MenuRestricao();
+                        Console.Clear();
+                        PassagemVoo pass = new();
+                       // pass.PassagemVoo();
 
                         break;
                     default:
@@ -108,9 +112,10 @@ namespace ProjetoOnTheFly
                   7 => Console.WriteLine(" Venda de passagem");
                   => "No case availabe"
 
-              };*/
+              };
+        */
 
-
+        /*
         static void MenuPassagemVoo()
         {
             Console.WriteLine(" Menu Passagem voo \n" +
@@ -118,7 +123,8 @@ namespace ProjetoOnTheFly
                  }
         static void MenuRestricao()
         {
-            Restricao rest = new Restricao();
+            Restrito rest = new Restrito();
+            Bloqueado bloq = new Bloqueado();
             int opcao = 0;
             Console.WriteLine(" Menu de restrições \n" +
                 " 1 - Verificar CPF\n" +
@@ -147,26 +153,27 @@ namespace ProjetoOnTheFly
                         rest.VerificarCpf();
                         break;
                     case 2:
-                        rest.VerificarCnpj();
+                     //   rest.VerificarCnpj();
                      
                         break;
                     case 3:
-                        rest.AddRestricaoCnpj();
+                     //   rest.AddRestricaoCnpj();
                         break;
                     case 4:
-                        rest.AddRestricaoCpf();
+                        bloq.GerarMenu();
                         break;
                     case 5:
-                        rest.LocalizarCpf();
+                      //  rest.LocalizarCpf();
                         break;
                     case 6:
-                        rest.LocalizarCnpj();
+                     //   rest.LocalizarCnpj();
                         break;
                     case 7:
-                        rest.RetRestricaoCpf();
+                        string idVoo = "0001";
+                       PassagemVoo passVoo = new (idVoo);
                         break;
                     case 8:
-                        rest.RetRestricaoCnpj();
+                    //    rest.RetRestricaoCnpj();
                         break;
                     default:
                         Console.WriteLine(" Opção invalida!!!");
@@ -175,6 +182,6 @@ namespace ProjetoOnTheFly
 
                 }
             } while (opcao > 5);
-        }
+        }*/
     }
 }
