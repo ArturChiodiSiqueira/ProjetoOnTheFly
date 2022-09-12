@@ -15,7 +15,7 @@ namespace ProjetoOnTheFly
         public int AssentosOcupados { get; set; }
         public string UltimaVenda { get; set; }
         public string DataCadastro { get; set; }
-        public char Situacao { get; set; }
+        public string Situacao { get; set; }
 
         string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
 
@@ -24,7 +24,7 @@ namespace ProjetoOnTheFly
 
         }
 
-        public Aeronave(string inscricao, int capacidade, int assentosOcupados, string ultimaVenda, string dataCadastro, char situacao)
+        public Aeronave(string inscricao, int capacidade, int assentosOcupados, string ultimaVenda, string dataCadastro, string situacao)
         {
             Inscricao = inscricao;
             Capacidade = capacidade;
@@ -38,28 +38,20 @@ namespace ProjetoOnTheFly
         {
             Console.WriteLine(">>> CADASTRO DE AERONAVE <<<");
 
-            CadastraIdAeronave();
-
-            if (VerificaAeronave(Caminho, Inscricao))
-            {
-                Console.WriteLine("Esta Aeronave já está cadastrada!!");
-                Thread.Sleep(3000);
+            if (!CadastraIdAeronave())
                 return;
-            }
 
-            do
-            {
-                Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
-                Capacidade = int.Parse(Console.ReadLine());
-            } while (Capacidade < 0 || Capacidade > 999);
+            if (!CadastraQtdPassageiros())
+                return;
 
-            AssentosOcupados = 0;
+            if (CadastraAssentos())
+                return;
 
             UltimaVenda = DateTime.Now.ToString("ddMMyyyy");
 
             DataCadastro = DateTime.Now.ToString("ddMMyyyy");
 
-            Situacao = 'A';
+            Situacao = "A";
             string caminho = Caminho;
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
@@ -83,13 +75,57 @@ namespace ProjetoOnTheFly
             return false;
         }
 
-        public void CadastraIdAeronave()
+        public bool CadastraIdAeronave()
         {
             do
             {
                 Console.Write("Informe o código de identificação da aeronave seguindo o padrão definido pela ANAC (XX-XXX):");
                 Inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
             } while (Inscricao.Length != 5);
+
+            if (VerificaAeronave(Caminho, Inscricao))
+            {
+                Console.WriteLine("Esta Aeronave já está cadastrada!!");
+                Thread.Sleep(3000);
+                return false;
+            }
+            return true;
+        }
+
+        public bool CadastraQtdPassageiros()
+        {
+            do
+            {
+                Console.Write("Informe a capacidade de pessoas que a aeronave comporta: ");
+                Capacidade = int.Parse(Console.ReadLine());
+            } while (Capacidade < 0 || Capacidade > 999);
+            return true;
+        }
+
+        public bool CadastraAssentos()
+        {
+            AssentosOcupados = 0;
+            return true;
+        }
+
+        public bool AlteraSituacao()
+        {
+            string num;
+            do
+            {
+                Console.Write("Alterar Situação [A] Ativo / [I] Inativo / [0] Cancelar: ");
+                num = Console.ReadLine().ToUpper();
+                if (num != "A" && num != "I" && num != "0")
+                {
+                    Console.WriteLine("Digite um opção válida!!!");
+                    Thread.Sleep(2000);
+                }
+            } while (num != "A" && num != "I" && num != "0");
+
+            if (num.Contains("0"))
+                return false;
+            Situacao = num;
+            return true;
         }
 
         public void ImprimeAeronave(string caminho, string inscricao)
@@ -111,45 +147,113 @@ namespace ProjetoOnTheFly
             }
         }
 
-        public Aeronave BuscaAeronave(string? inscricao, int? capacidade, int? assentosOcupados, string? ultimaVenda, string? dataCadastro, char? situacao)
+        public void ImprimeAeronaves()
         {
-            foreach (string line in File.ReadLines(Caminho))
+            string[] lines = File.ReadAllLines(Caminho);
+            List<string> aeronaves = new();
+
+            for (int i = 1; i < lines.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-                Aeronave aeronave = new Aeronave();
-                aeronave.Inscricao = line.Substring(0, 5);
-                aeronave.Capacidade = int.Parse(line.Substring(5, 3));
-                aeronave.AssentosOcupados = int.Parse(line.Substring(8, 3));
-                aeronave.UltimaVenda = DateTime.ParseExact(line.Substring(11, 8), "ddMMyyyy", null).ToString();
-                aeronave.DataCadastro = DateTime.ParseExact(line.Substring(19, 8), "ddMMyyyy", null).ToString();
-                aeronave.Situacao = char.Parse(line.Substring(27, 1));
-                if (
-                    (inscricao == null || aeronave.Inscricao == inscricao) &&
-                    (capacidade == null || aeronave.Capacidade == capacidade) &&
-                    (assentosOcupados == null || aeronave.AssentosOcupados == assentosOcupados) &&
-                    (ultimaVenda == null || aeronave.UltimaVenda == ultimaVenda) &&
-                    (dataCadastro == null || aeronave.DataCadastro == dataCadastro) &&
-                    (situacao == null || aeronave.Situacao == situacao)
-                    )
-                {
-                    return aeronave;
-                }
+                //Verifica se o cadastro esta ativo
+                if (lines[i].Substring(27, 1).Contains("A"))
+                    aeronaves.Add(lines[i]);
             }
-            return null;
+
+            //Laço para navegar nos cadastros de passageitos
+            for (int i = 0; i < aeronaves.Count; i++)
+            {
+                string op;
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine(">>> Cadastro Aeronaves <<<\nDigite para navegar:\n[1] Próximo Cadasatro\n[2] Cadastro Anterior" +
+                        "\n[3] Último cadastro\n[4] Voltar ao Início\n[0] Sair\n");
+
+                    Console.WriteLine($"Cadastro [{i + 1}] de [{aeronaves.Count}]");
+                    //Imprimi o primeiro da lista 
+                    ImprimeAeronave(Caminho, aeronaves[i].Substring(0, 5));
+
+                    Console.Write("Opção: ");
+                    op = Console.ReadLine();
+
+                    if (op != "0" && op != "1" && op != "2" && op != "3" && op != "4")
+                    {
+                        Console.WriteLine("Opção inválida!");
+                        Thread.Sleep(2000);
+                    }
+                    //Sai do método
+                    else if (op.Contains("0"))
+                        return;
+
+                    //Volta no Cadastro Anterior
+                    else if (op.Contains("2"))
+                        if (i == 0)
+                            i = 0;
+                        else
+                            i--;
+
+                    //Vai para o fim da lista
+                    else if (op.Contains("3"))
+                        i = aeronaves.Count - 1;
+
+                    //Volta para o inicio da lista
+                    else if (op.Contains("4"))
+                        i = 0;
+                    //Vai para o próximo da lista    
+                } while (op != "1");
+                i = 0;
+            }
         }
+
+        //public Aeronave BuscaAeronave(string? inscricao, int? capacidade, int? assentosOcupados, string? ultimaVenda, string? dataCadastro, string? situacao)
+        //{
+        //    foreach (string line in File.ReadLines(Caminho))
+        //    {
+        //        if (string.IsNullOrWhiteSpace(line))
+        //        {
+        //            continue;
+        //        }
+        //        Aeronave aeronave = new Aeronave();
+        //        aeronave.Inscricao = line.Substring(0, 5);
+        //        aeronave.Capacidade = int.Parse(line.Substring(5, 3));
+        //        aeronave.AssentosOcupados = int.Parse(line.Substring(8, 3));
+        //        aeronave.UltimaVenda = DateTime.ParseExact(line.Substring(11, 8), "ddMMyyyy", null).ToString();
+        //        aeronave.DataCadastro = DateTime.ParseExact(line.Substring(19, 8), "ddMMyyyy", null).ToString();
+        //        aeronave.Situacao = (line.Substring(27, 1));
+        //        if (
+        //            (inscricao == null || aeronave.Inscricao == inscricao) &&
+        //            (capacidade == null || aeronave.Capacidade == capacidade) &&
+        //            (assentosOcupados == null || aeronave.AssentosOcupados == assentosOcupados) &&
+        //            (ultimaVenda == null || aeronave.UltimaVenda == ultimaVenda) &&
+        //            (dataCadastro == null || aeronave.DataCadastro == dataCadastro) &&
+        //            (situacao == null || aeronave.Situacao == situacao)
+        //            )
+        //        {
+        //            return aeronave;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         public void AlteraDadoAeronave()
         {
+            string inscricao;
+
             string caminho = Caminho;
+            Console.WriteLine(">>> ALTERAR DADOS DE AERONAVE <<<\nPara sair digite 's'.\n");
+            Console.Write("Digite a inscrição da aeronave: ");
+            inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
+            if (inscricao == "s")
+                return;
 
-            Console.Write("Informe o código de identificação da aeronave: ");
-            string inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
+            if (!VerificaAeronave(Caminho, inscricao))
+            {
+                Console.WriteLine("Aeronave não encontrada!!");
+                Thread.Sleep(3000);
+                return;
+            }
 
-
-            string[] lines = File.ReadAllLines(caminho);
+            string[] lines = File.ReadAllLines(Caminho);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -158,45 +262,48 @@ namespace ProjetoOnTheFly
                     string num;
                     do
                     {
-                        Console.WriteLine("Para alterar digite:\n\n[1] Capacidade\n[2] Assentos Ocupados\n[3] Ultima Venda\n[4] Data de Cadastro\n[5] Situação do Cadastro");
+                        Console.Clear();
+                        Console.WriteLine(">>> ALTERAR DADOS DE AERONAVE <<<");
+                        Console.Write("Para alterar digite:\n\n[1] Capacidade\n[2] Assentos Ocupados\n[3] Situação do Cadastro\n[0] Sair\nOpção: ");
                         num = Console.ReadLine();
 
-                        if (num != "1" && num != "2" && num != "3" && num != "4" && num != "5")
+                        if (num != "1" && num != "2" && num != "3" && num != "4" && num != "0")
+                        {
                             Console.WriteLine("Opção inválida!");
+                            Thread.Sleep(3000);
+                        }
 
-                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "5");
+                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "0");
+
+                    if (num.Contains("0"))
+                        return;
 
                     switch (num)
                     {
                         case "1":
-                            do
-                            {
-                                Console.Write("Digite a caoacidade, 3 digitos: ");
-                                Capacidade = int.Parse(Console.ReadLine());
-                                if (Capacidade.ToString() == "0")
-                                    return;
-                                if (Capacidade.ToString().Length > 3)
-                                {
-                                    Console.WriteLine("informe um numero de 3 digitos");
-                                    Thread.Sleep(2000);
-                                }
-                            } while (Capacidade.ToString().Length > 3);
+                            if (!CadastraQtdPassageiros())
+                                return;
 
-                            for (int j = Capacidade.ToString().Length; j <= 3; j++)
-                                Capacidade += 0;
+                            lines[i] = lines[i].Replace(lines[i].Substring(5, Capacidade.ToString().Length), Capacidade.ToString());
+                            break;
 
-                            lines[i] = lines[i].Replace(lines[i].Substring(11, Capacidade.ToString().Length), Capacidade.ToString());
+                        case "2":
+                            if (!CadastraAssentos())
+                                return;
+                            lines[i] = lines[i].Replace(lines[i].Substring(8, AssentosOcupados.ToString().Length), AssentosOcupados.ToString());
+                            break;
 
-                            Console.WriteLine("Capacidade alterada com sucesso!");
-
+                        case "3":
+                            if (!AlteraSituacao())
+                                return;
+                            lines[i] = lines[i].Replace(lines[i].Substring(27, Situacao.Length), Situacao);
                             break;
                     }
+                    Console.WriteLine("Cadastro alterado com sucesso!");
+                    Thread.Sleep(3000);
                 }
             }
-
-            File.WriteAllLines(caminho, lines);
-            Console.WriteLine("gravou");
-            Console.ReadKey();
+            File.WriteAllLines(Caminho, lines);
         }
 
         public override string ToString()

@@ -68,7 +68,7 @@ namespace ProjetoOnTheFly
                 Console.Clear();
                 Console.WriteLine("°°°  MENU  CADASTRO  °°°");
                 Console.WriteLine("opção 0 : sair");
-                Console.WriteLine("opção 1 : cadastrar passaageiro");
+                Console.WriteLine("opção 1 : cadastrar passageiro");
                 Console.WriteLine("opção 2 : cadastrar companhia aerea");
                 Console.WriteLine("opção 4 : cadastrar aeronave");
                 Console.WriteLine("opção 5 : cadstrar bloqueados");
