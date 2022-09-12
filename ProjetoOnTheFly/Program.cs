@@ -262,8 +262,9 @@ namespace ProjetoOnTheFly
 
                             case "3":
                                 Console.Clear();
-
-                                break;
+                            Aeronave aeronave = new Aeronave();
+                            aeronave.AlteraDadoAeronave();
+                            break;
 
                             case "4":
                                 Console.Clear();

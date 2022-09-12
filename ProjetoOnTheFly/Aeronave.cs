@@ -141,10 +141,63 @@ namespace ProjetoOnTheFly
             return null;
         }
 
-        //public void AlteraDadoAeronave()
-        //{
-        //    
-        //}
+        public void AlteraDadoAeronave()
+        {
+            string caminho = Caminho;
+
+            Console.Write("Informe o código de identificação da aeronave: ");
+            string inscricao = Console.ReadLine().ToUpper().Trim().Replace("-", "");
+
+
+            string[] lines = File.ReadAllLines(caminho);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains(inscricao))
+                {
+                    string num;
+                    do
+                    {
+                        Console.WriteLine("Para alterar digite:\n\n[1] Capacidade\n[2] Assentos Ocupados\n[3] Ultima Venda\n[4] Data de Cadastro\n[5] Situação do Cadastro");
+                        num = Console.ReadLine();
+
+                        if (num != "1" && num != "2" && num != "3" && num != "4" && num != "5")
+                            Console.WriteLine("Opção inválida!");
+
+                    } while (num != "1" && num != "2" && num != "3" && num != "4" && num != "5");
+
+                    switch (num)
+                    {
+                        case "1":
+                            do
+                            {
+                                Console.Write("Digite a caoacidade, 3 digitos: ");
+                                Capacidade = int.Parse(Console.ReadLine());
+                                if (Capacidade.ToString() == "0")
+                                    return;
+                                if (Capacidade.ToString().Length > 3)
+                                {
+                                    Console.WriteLine("informe um numero de 3 digitos");
+                                    Thread.Sleep(2000);
+                                }
+                            } while (Capacidade.ToString().Length > 3);
+
+                            for (int j = Capacidade.ToString().Length; j <= 3; j++)
+                                Capacidade += 0;
+
+                            lines[i] = lines[i].Replace(lines[i].Substring(11, Capacidade.ToString().Length), Capacidade.ToString());
+
+                            Console.WriteLine("Capacidade alterada com sucesso!");
+
+                            break;
+                    }
+                }
+            }
+
+            File.WriteAllLines(caminho, lines);
+            Console.WriteLine("gravou");
+            Console.ReadKey();
+        }
 
         public override string ToString()
         {
