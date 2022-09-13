@@ -13,7 +13,8 @@ namespace ProjetoOnTheFly
 
         static void MostrarMenuInicial()
         {
-            string opcao;
+            int opcao = 9;
+
             do
             {
                 Console.Clear();
@@ -77,16 +78,11 @@ namespace ProjetoOnTheFly
                 Console.WriteLine("opção 8 : cadastrar venda de passagem");
 
                 Console.Write("\n\tInforme a opcao: ");
-                opcao = Console.ReadLine();
-
-                if (opcao != "0" && opcao != "1" && opcao != "3" && opcao != "4" && opcao != "5" && opcao != "6" && opcao != "7" && opcao != "8")
+                try
                 {
-                    Console.WriteLine("'" + opcao + "' é uma opcao INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
-                    Console.ReadKey();
-                    Console.Clear();
+                    opcao = int.Parse(Console.ReadLine());
                 }
-
-                else
+                catch (Exception)
                 {
                     Aeronave aeronave = new Aeronave();
                     Voo voo = new Voo();
@@ -96,20 +92,20 @@ namespace ProjetoOnTheFly
                             Environment.Exit(0);
                             break;
 
-                        case "1":
-                            Console.Clear();
+                    case 1:
+                        Console.Clear();
 
-                            break;
+                        break;
 
-                        case "2":
-                            Console.Clear();
+                    case 2:
+                        Console.Clear();
 
-                            break;
+                        break;
 
-                        case "3":
-                            Console.Clear();
+                    case 3:
+                        Console.Clear();
 
-                            break;
+                        break;
 
                         case "4":
                             Console.Clear();
@@ -199,25 +195,28 @@ namespace ProjetoOnTheFly
                         case "5":
                             Console.Clear();
 
-                            break;
+                        break;
 
                         case "6":
                             Console.Clear();
                             voo.ImprimeVoos();
                             break;
 
-                        case "7":
-                            Console.Clear();
+                    case 8:
+                        Console.Clear();
+                        PassagemVoo pass = new ();
+                        pass.GerarMenu();
+                       // pass.PassagemVoo();
 
-                            break;
-
-                        case "8":
-                            Console.Clear();
-
-                            break;
-                    }
+                        break;
+                    default:
+                        Console.WriteLine(" Opção INVALIDA! Para voltar ao MENU, pressione QUALQUER TECLA!");
+                        Console.ReadKey();
+                       
+                        break;
                 }
-            } while (true);
+
+            } while (opcao>8);
         }
 
         static void MostrarMenuEditar()
