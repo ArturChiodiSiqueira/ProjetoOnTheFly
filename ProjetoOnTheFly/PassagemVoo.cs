@@ -16,7 +16,7 @@ namespace ProjetoOnTheFly
         public string Valor { get; set; }
         public char Situacao { get; set; }
 
-        string Caminho = $"C:\\Users\\Luciano\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\PassagemVoo.dat";
+        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\PassagemVoo.dat";
 
 
         public PassagemVoo()
@@ -25,7 +25,7 @@ namespace ProjetoOnTheFly
 
 
         }
-
+        
         public void GerarPassagem(int capacidade, string idVoo)
         {
 

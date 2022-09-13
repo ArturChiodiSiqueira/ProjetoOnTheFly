@@ -14,7 +14,7 @@ namespace ProjetoOnTheFly
     {
         public string Cnpj { get; set; }
 
-        string Caminho = $"C:\\Users\\Luciano\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Bloqueados.dat";
+        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Bloqueados.dat";
 
 
         public void GerarMenu()

@@ -126,6 +126,9 @@ namespace ProjetoOnTheFly
 
             Situacao = "A";
 
+            PassagemVoo passagemVoo = new();
+            //passagemVoo.GerarPassagem();//capacidade e id voo
+
             string caminho = Caminho;
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);

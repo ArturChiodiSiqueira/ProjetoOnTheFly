@@ -12,7 +12,7 @@ namespace ProjetoOnTheFly
     {
         public string Cpf { get; set; }
 
-        string Caminho = $"C:\\Users\\Luciano\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
+        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
         public void GerarMenu()
         {
             Console.WriteLine(" Digite a opção: \n" +
