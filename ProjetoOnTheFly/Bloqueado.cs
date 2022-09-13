@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoOnTheFly
 {
-    
+
 
     internal class Bloqueado
     {
@@ -19,25 +19,46 @@ namespace ProjetoOnTheFly
 
         public void GerarMenu()
         {
+            int opc = 5;
+            bool retorna = true;
+
             //BloquearCnpj();
             Console.WriteLine(" Digite a opção: \n" +
                 "1 - Adicionar CNPJ\n" +
                 "2 - Verificar CNPJ\n" +
-                "3 - Remover CNPJ");
-            int opc = int.Parse(Console.ReadLine());
-            switch (opc)
+                "3 - Remover CNPJ\n" +
+                "4 - Voltar ao Menu Restritos\n" +
+                "0 - Sair");
+            do
             {
-                case 1:
-                    BloquearCnpj();
-                    break;
-                case 2:
-                    VerificarCnpj();
-                    break;
-                case 3:
-                    DesbloquearCnpj();
-                    break;
-                default:break;
-            }
+                try
+                {
+                    opc = int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                }
+
+                switch (opc)
+                {
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    case 1:
+                        BloquearCnpj();
+                        break;
+                    case 2:
+                        VerificarCnpj();
+                        break;
+                    case 3:
+                        DesbloquearCnpj();
+                        break;
+                    case 4:
+                        retorna = false;
+                        break;
+                    default: break;
+                }
+            } while (retorna);
         }
 
         public void VerificarCnpj()
@@ -46,7 +67,7 @@ namespace ProjetoOnTheFly
             Cnpj = Console.ReadLine().Replace(".", "").Replace("/", "").Replace("-", "");
             string caminho = Caminho;
 
-            foreach(string linha in File.ReadLines(caminho))
+            foreach (string linha in File.ReadLines(caminho))
             {
                 if (linha.Contains(Cnpj))
                 {
@@ -67,7 +88,7 @@ namespace ProjetoOnTheFly
             do
             {
                 Console.WriteLine(" Digite o CNPJ a ser bloqueado");
-                Cnpj = Console.ReadLine().Replace(".","").Replace("/","").Replace("-","");
+                Cnpj = Console.ReadLine().Replace(".", "").Replace("/", "").Replace("-", "");
                 validar = ValidarCNPJ(Cnpj);
                 if (validar)
                 {
@@ -77,7 +98,8 @@ namespace ProjetoOnTheFly
                     Console.WriteLine("\n CNPJ foi adicionado a lista de bloqueado");
                     Console.ReadKey();
                 }
-                else if(!validar){
+                else if (!validar)
+                {
                     Console.WriteLine(" CNPJ invalido");
                     Console.WriteLine(" \nDigite um CPNJ valido\n");
                 }
@@ -98,10 +120,10 @@ namespace ProjetoOnTheFly
             List<string> desbloq = new();
 
             foreach (string linha in File.ReadLines(caminho))
-            {   
-              desbloq.Add(linha);
+            {
+                desbloq.Add(linha);
             }
-            for (int i =0; i <desbloq.Count;i++)
+            for (int i = 0; i < desbloq.Count; i++)
             {
                 if (desbloq[i].Contains(Cnpj))
                 {
@@ -110,7 +132,8 @@ namespace ProjetoOnTheFly
                     Console.ReadKey();
 
                 }
-            }File.WriteAllLines(Caminho,desbloq.ToArray());
+            }
+            File.WriteAllLines(Caminho, desbloq.ToArray());
 
         }
 
