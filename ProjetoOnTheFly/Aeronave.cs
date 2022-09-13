@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +17,7 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public string Situacao { get; set; }
 
-        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
+        string Caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
 
         public Aeronave()
         {
@@ -74,7 +73,7 @@ namespace ProjetoOnTheFly
             }
             return false;
         }
-        
+
         public bool CadastraIdAeronave()
         {
             do

@@ -19,7 +19,7 @@ namespace ProjetoOnTheFly
         private string Situacao { get; set; }
 
         //Caminho para acessar o arquivo de passageiros
-        string caminho = "C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
+        string caminho = "C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
         public Passageiro()
         {
            
@@ -151,7 +151,6 @@ namespace ProjetoOnTheFly
             Situacao = "A";
 
             //Caminho para gravar o novo passageiro
-            string caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
             string texto = $"{ToString()}\n";
             File.AppendAllText(caminho, texto);
 

@@ -7,6 +7,7 @@ namespace ProjetoOnTheFly
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            
 
             MostrarMenuInicial();
         }
@@ -73,7 +74,7 @@ namespace ProjetoOnTheFly
 
             Passageiro passageiro = new();
             CompanhiaAerea companhiaAerea = new();
-            //Aeronave aeronave = new();
+            Aeronave aeronave = new();
             Voo voo = new();
 
 

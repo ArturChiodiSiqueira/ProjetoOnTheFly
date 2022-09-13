@@ -17,9 +17,9 @@ namespace ProjetoOnTheFly
         public string DataCadastro { get; set; }
         public string Situacao { get; set; }
 
-        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Voo.dat";
-        string CaminhoIata = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\ListaIatas.dat";
-        string CaminhoAeronave = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
+        string Caminho = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Voo.dat";
+        string CaminhoIata = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\ListaIatas.dat";
+        string CaminhoAeronave = $"C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
 
         public Voo()
         {
@@ -127,7 +127,7 @@ namespace ProjetoOnTheFly
             Situacao = "A";
 
             PassagemVoo passagemVoo = new();
-            //passagemVoo.GerarPassagem();//capacidade e id voo
+            //passagemVoo.GerarPassagem(Id);
 
             string caminho = Caminho;
             string texto = $"{ToString()}\n";
