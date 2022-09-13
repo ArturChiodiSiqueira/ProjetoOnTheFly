@@ -127,7 +127,7 @@ namespace ProjetoOnTheFly
             Situacao = "A";
 
             PassagemVoo passagemVoo = new();
-            //passagemVoo.GerarPassagem();//capacidade e id voo
+            passagemVoo.GerarPassagem(IdAeronave, Id);
 
             string caminho = Caminho;
             string texto = $"{ToString()}\n";
@@ -143,7 +143,7 @@ namespace ProjetoOnTheFly
         public bool GerarIdVoo()
         {
             Random random = new Random();
-            Id = "V" + random.Next(0001, 9999).ToString();
+            Id = "V" + random.Next(0001, 9999).ToString("0000");
 
             string caminho = Caminho;
             foreach (string linha in File.ReadLines(caminho))

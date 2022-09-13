@@ -17,7 +17,7 @@ namespace ProjetoOnTheFly
         public char Situacao { get; set; }
 
         string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\PassagemVoo.dat";
-
+        string CaminhoAeronave = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Aeronave.dat";
 
         public PassagemVoo()
         {
@@ -26,11 +26,21 @@ namespace ProjetoOnTheFly
 
         }
         
-        public void GerarPassagem(int capacidade, string idVoo)
+        public void GerarPassagem(string idAeronave, string idVoo)
         {
-
+            int capacidade = 0;
             float valorPas;
 
+            string caminhoAeronave = CaminhoAeronave;
+            foreach (string line in File.ReadLines(caminhoAeronave))
+            {
+                if (line.Contains(idAeronave))
+                {
+                    capacidade = int.Parse(line.Substring(5, 3));
+                    Thread.Sleep(2000);
+                }
+            }
+            Thread.Sleep(2000);
 
             // Console.WriteLine(" Digite o codigo do Voo: ");
             // idVoo = Console.ReadLine();
