@@ -18,10 +18,10 @@ namespace ProjetoOnTheFly
         //public decimal ValorUnitario { get; set; }
         //Colocar id item venda?
 
-        string caminhoitemvenda = $"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\ItemVenda.dat";
-        string caminhoPassageiro = $"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
-        string caminhoVenda = $"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Venda.dat";
-        string caminhorestrito = $"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restrito.dat";
+        string caminhoitemvenda = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\ItemVenda.dat";
+        string caminhoPassageiro = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Passageiro.dat";
+        string caminhoVenda = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Venda.dat";
+        string caminhorestrito = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
 
         public Venda()
         {
@@ -104,7 +104,7 @@ namespace ProjetoOnTheFly
 
         protected int GetID()
         {
-            string[] contador = System.IO.File.ReadAllLines($"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Id.dat");
+            string[] contador = System.IO.File.ReadAllLines($"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Id.dat");
             string[] num = new string[1];
             foreach (string cont in contador)
                 num[0] = cont;
@@ -114,7 +114,7 @@ namespace ProjetoOnTheFly
         //Método para devolver o Id no arquivo
         protected void SaveID(int id)
         {
-            StreamWriter idPessoa = new StreamWriter($"C:\\Users\\Lívia\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Id.dat");
+            StreamWriter idPessoa = new StreamWriter($"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Id.dat");
             idPessoa.WriteLine(id.ToString("00000"));
             idPessoa.Close();
         }

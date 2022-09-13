@@ -17,7 +17,7 @@ namespace ProjetoOnTheFly
             Console.Clear();
             Console.WriteLine(" °°°  MENU  INICIAL  °°°");
             Console.WriteLine(" Opção 1 : Menu cadastro");
-            Console.WriteLine(" Opção 2 : Menu localizar");
+            Console.WriteLine(" Opção 2 : Menu localizar (inoperante)");
             Console.WriteLine(" Opção 3 : Menu editar");
             Console.WriteLine(" Opção 4 : Menu imprimir");
             Console.WriteLine(" Opção 5 : Menu bloqueados e restritos");
@@ -48,7 +48,7 @@ namespace ProjetoOnTheFly
 
                     case 2:
                         Console.Clear();
-                        MostrarMenuLocalizar();
+                        //MostrarMenuLocalizar();
                         break;
 
                     case 3:
@@ -147,93 +147,94 @@ namespace ProjetoOnTheFly
             } while (true);
         }
 
-        static void MostrarMenuLocalizar()
-        {
-            int opcao = 8;
+        
+        //static void MostrarMenuLocalizar() //inoperante
+        //{
+        //    int opcao = 8;
 
-            Passageiro passageiro = new();
-            CompanhiaAerea companhiaAerea = new();
-            Aeronave aeronave = new();
-            Voo voo = new();
-            PassagemVoo passagemVoo = new();
-            Venda venda = new();
+        //    Passageiro passageiro = new();
+        //    CompanhiaAerea companhiaAerea = new();
+        //    Aeronave aeronave = new();
+        //    Voo voo = new();
+        //    PassagemVoo passagemVoo = new();
+        //    Venda venda = new();
 
-            Console.WriteLine(" °°°  MENU  LOCALIZAR  °°°");
-            Console.WriteLine(" Opção 1 : Localizar passageiro");
-            Console.WriteLine(" Opção 2 : Localizar companhia aerea");
-            Console.WriteLine(" Opção 3 : Localizar aeronave");
-            Console.WriteLine(" Opção 4 : Localizar voo");
-            Console.WriteLine(" Opção 5 : Localizar passagem");
-            Console.WriteLine(" Opção 6 : Localizar venda de passagem");
-            Console.WriteLine(" Opção 7 : Voltar ao Menu Iniciar");
-            Console.WriteLine(" Opção 0 : Sair");
+        //    Console.WriteLine(" °°°  MENU  LOCALIZAR  °°°");
+        //    Console.WriteLine(" Opção 1 : Localizar passageiro");
+        //    Console.WriteLine(" Opção 2 : Localizar companhia aerea");
+        //    Console.WriteLine(" Opção 3 : Localizar aeronave");
+        //    Console.WriteLine(" Opção 4 : Localizar voo");
+        //    Console.WriteLine(" Opção 5 : Localizar passagem");
+        //    Console.WriteLine(" Opção 6 : Localizar venda de passagem");
+        //    Console.WriteLine(" Opção 7 : Voltar ao Menu Iniciar");
+        //    Console.WriteLine(" Opção 0 : Sair");
 
-            Console.Write("\n Informe a opção: ");
+        //    Console.Write("\n Informe a opção: ");
 
-            do
-            {
-                try
-                {
-                    opcao = int.Parse(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                }
+        //    do
+        //    {
+        //        try
+        //        {
+        //            opcao = int.Parse(Console.ReadLine());
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
 
-                switch (opcao)
-                {
-                    case 0:
-                        Environment.Exit(0);
-                        break;
+        //        switch (opcao)
+        //        {
+        //            case 0:
+        //                Environment.Exit(0);
+        //                break;
 
-                    case 1:
-                        Console.WriteLine("Localizar passaageiro");
-                        Console.Clear();
-                        //passageiro.LocalizaPassageiro();
-                        break;
+        //            case 1:
+        //                Console.WriteLine("Localizar passaageiro");
+        //                Console.Clear();
+        //                //passageiro.LocalizaPassageiro();
+        //                break;
 
-                    case 2:
-                        Console.WriteLine("Localizar companhia aerea");
-                        Console.Clear();
-                        //companhiaAerea.LocalCompanhia();
-                        break;
+        //            case 2:
+        //                Console.WriteLine("Localizar companhia aerea");
+        //                Console.Clear();
+        //                //companhiaAerea.LocalCompanhia();
+        //                break;
 
-                    case 3:
-                        Console.WriteLine("Localizar aeronave");
-                        Console.Clear();
-                        aeronave.ImprimeAeronaves();
-                        break;
+        //            case 3:
+        //                Console.WriteLine("Localizar aeronave");
+        //                Console.Clear();
+        //                aeronave.ImprimeAeronaves();
+        //                break;
 
-                    case 4:
-                        Console.WriteLine("Localizar voo");
-                        Console.Clear();
-                        voo.ImprimeVoos();
-                        break;
+        //            case 4:
+        //                Console.WriteLine("Localizar voo");
+        //                Console.Clear();
+        //                voo.ImprimeVoos();
+        //                break;
 
-                    //case 5:
-                    //    Console.WriteLine("Localizar passagem");
-                    //    Console.Clear();
-                    //    passagemVoo.NevagarPassagem();
-                    //    break;
+        //            //case 5:
+        //            //    Console.WriteLine("Localizar passagem");
+        //            //    Console.Clear();
+        //            //    passagemVoo.NevagarPassagem();
+        //            //    break;
 
-                    case 6:
-                        Console.WriteLine("Localizar venda de passagem");
-                        Console.Clear();
-                        venda.Localizar();
-                        break;
+        //            case 6:
+        //                Console.WriteLine("Localizar venda de passagem");
+        //                Console.Clear();
+        //                venda.Localizar();
+        //                break;
 
-                    case 7:
-                        Console.Clear();
-                        MostrarMenuInicial();
-                        break;
+        //            case 7:
+        //                Console.Clear();
+        //                MostrarMenuInicial();
+        //                break;
 
-                    default:
-                        Console.Write("\n Opcao Inválida!\n Digite novamente: ");
-                        break;
-                }
+        //            default:
+        //                Console.Write("\n Opcao Inválida!\n Digite novamente: ");
+        //                break;
+        //        }
 
-            } while (true);
-        }
+        //    } while (true);
+        //}
 
         static void MostrarMenuEditar()
         {
