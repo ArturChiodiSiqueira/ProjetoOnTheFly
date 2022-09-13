@@ -5,4 +5,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Aeronave.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Aeronave.cs" />
+  </ItemGroup>
+
 </Project>

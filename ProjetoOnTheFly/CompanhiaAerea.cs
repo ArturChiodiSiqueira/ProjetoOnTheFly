@@ -18,7 +18,7 @@ namespace ProjetoOnTheFly
         private string Situacao { get; set; }
 
         //Caminho para acessar o arquivo de companhias
-        string caminho = "C:\\Users\\wessm\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\CompanhiaAerea.dat";
+        string caminho = "C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\CompanhiaAerea.dat";
         public CompanhiaAerea()
         {
 
