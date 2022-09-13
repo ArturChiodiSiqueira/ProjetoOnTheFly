@@ -73,7 +73,7 @@ namespace ProjetoOnTheFly
 
             Passageiro passageiro = new();
             CompanhiaAerea companhiaAerea = new();
-            //Aeronave aeronave = new();
+            Aeronave aeronave = new();
             Voo voo = new();
 
 
@@ -115,7 +115,7 @@ namespace ProjetoOnTheFly
                     case 3:
                         Console.WriteLine(" Cadastrar aeronave");
                         Console.Clear();
-                        //aeronave.CadastraAeronave();
+                        aeronave.CadastraAeronave();
                         break;
 
                     case 4:
@@ -146,7 +146,7 @@ namespace ProjetoOnTheFly
 
             Passageiro passageiro = new();
             CompanhiaAerea companhiaAerea = new();
-            //Aeronave aeronave = new();
+            Aeronave aeronave = new();
             Voo voo = new();
             PassagemVoo passagemVoo = new();
 
@@ -193,7 +193,7 @@ namespace ProjetoOnTheFly
                     case 3:
                         Console.WriteLine("Localizar aeronave");
                         Console.Clear();
-                        //aeronave.ImprimeAeronaves();
+                        aeronave.ImprimeAeronaves();
                         break;
 
                     case 4:
@@ -233,7 +233,7 @@ namespace ProjetoOnTheFly
 
             Passageiro passageiro = new();
             CompanhiaAerea companhiaAerea = new();
-            //Aeronave aeronave = new();
+            Aeronave aeronave = new();
             Voo voo = new();
             PassagemVoo passagemVoo = new();
 
@@ -278,7 +278,7 @@ namespace ProjetoOnTheFly
                     case 3:
                         Console.WriteLine("Editar aeronave");
                         Console.Clear();
-                        //aeronave.AlteraDadoAeronave();
+                        aeronave.AlteraDadoAeronave();
                         break;
 
                     case 4:
