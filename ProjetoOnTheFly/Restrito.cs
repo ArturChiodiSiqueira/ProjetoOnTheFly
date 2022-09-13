@@ -15,30 +15,53 @@ namespace ProjetoOnTheFly
         string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
         public void GerarMenu()
         {
+            int opc = 5;
+            bool retorna = true;
+
             Console.WriteLine(" Digite a opção: \n" +
                 "1 - Adicionar CPF\n" +
                 "2 - Verificar CPF\n" +
-                "3 - Remover CPF");
-            int opc = int.Parse(Console.ReadLine());
-            switch (opc)
+                "3 - Remover CPF\n" +
+                "4 - Voltar ao Menu Restritos\n" +
+                "0 - Sair");
+
+            do
             {
-                case 1:
-                    AddRestricaoCpf();
-                    break;
-                case 2:
-                  VerificarCpf();
-                    break;
-                case 3:
-                    RetirarRestricaoCpf();
-                    break;
-                default: break;
-            }
+                try
+                {
+                    opc = int.Parse(Console.ReadLine());
+
+                }
+                catch (Exception)
+                {
+                }
+
+                switch (opc)
+                {
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    case 1:
+                        AddRestricaoCpf();
+                        break;
+                    case 2:
+                        VerificarCpf();
+                        break;
+                    case 3:
+                        RetirarRestricaoCpf();
+                        break;
+                    case 4:
+                        retorna = false;
+                        break;
+                    default: break;
+                }
+            } while (retorna);
         }
-        
+
         public void VerificarCpf()
         {
             Console.WriteLine(" Digite o CPF para ser verificado: ");
-            Cpf = Console.ReadLine().Replace(".","").Replace("-","");
+            Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
             string caminho = Caminho;
 
             foreach (string linha in File.ReadLines(caminho))
@@ -58,7 +81,7 @@ namespace ProjetoOnTheFly
         }
         public void AddRestricaoCpf()
         {
-            bool validar ;
+            bool validar;
 
             do
             {
@@ -67,8 +90,8 @@ namespace ProjetoOnTheFly
                 validar = ValidarCPF(Cpf);
                 if (validar)
                 {
-                    
-                    string caminho =Caminho;
+
+                    string caminho = Caminho;
                     string texto = $"{ToString()}\n";
                     File.AppendAllText(caminho, texto);
                     Console.WriteLine("\n CPF foi adicionado a lista de restringido");
@@ -81,15 +104,15 @@ namespace ProjetoOnTheFly
                     Console.WriteLine(" Digite um CPF valido\n");
                 }
             } while (validar == false);
-          
+
         }
-             
+
         public void RetirarRestricaoCpf()
         {
             Console.WriteLine(" Digite o CPF para verificar: ");
-            Cpf = Console.ReadLine().Replace(".","").Replace("-","");
-            string caminho =Caminho;  
-            List<string> retRest = new ();
+            Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
+            string caminho = Caminho;
+            List<string> retRest = new();
 
             foreach (string linha in File.ReadLines(caminho))
             {
@@ -103,13 +126,14 @@ namespace ProjetoOnTheFly
                     Console.WriteLine("Retirada a restrição do CPF com sucesso");
                     Console.ReadKey();
                 }
-            }File.WriteAllLines(Caminho, retRest.ToArray());
+            }
+            File.WriteAllLines(Caminho, retRest.ToArray());
         }
-        
+
 
         public override string ToString()
         {
-            return$"{Cpf}";
+            return $"{Cpf}";
         }
 
         private static bool ValidarCPF(string vrCPF)
