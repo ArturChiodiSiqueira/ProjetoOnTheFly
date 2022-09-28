@@ -14,7 +14,10 @@ namespace ProjetoOnTheFly
     {
         public string Cnpj { get; set; }
 
-        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Bloqueados.dat";
+
+        ConexaoBanco conexaoBD = new ConexaoBanco();
+
+       // string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Bloqueados.dat";
 
 
         public void GerarMenu()
@@ -92,9 +95,10 @@ namespace ProjetoOnTheFly
                 validar = ValidarCNPJ(Cnpj);
                 if (validar)
                 {
-                    string caminho = Caminho;
-                    string texto = $"{ToString()}\n";
-                    File.AppendAllText(caminho, texto);
+                    string query = $"INSERT INTO Bloqueado  (CNPJ) VALUES('{Cnpj}')";
+
+                    conexaoBD.Insert(query);
+
                     Console.WriteLine("\n CNPJ foi adicionado a lista de bloqueado");
                     Console.ReadKey();
                 }
