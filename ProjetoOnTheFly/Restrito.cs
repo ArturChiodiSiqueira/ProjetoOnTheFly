@@ -12,9 +12,12 @@ namespace ProjetoOnTheFly
     {
         public string Cpf { get; set; }
 
-        string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
+        ConexaoBanco conexaoBD = new ConexaoBanco();
+
+        // string Caminho = $"C:\\Users\\artur\\source\\repos\\ProjetoOnTheFly\\ProjetoOnTheFly\\Dados\\Restritos.dat";
         public void GerarMenu()
         {
+            
             int opc = 5;
             bool retorna = true;
 
@@ -45,7 +48,7 @@ namespace ProjetoOnTheFly
                         AddRestricaoCpf();
                         break;
                     case 2:
-                        VerificarCpf();
+                        ListarCpfRestringido();
                         break;
                     case 3:
                         RetirarRestricaoCpf();
@@ -58,26 +61,18 @@ namespace ProjetoOnTheFly
             } while (retorna);
         }
 
-        public void VerificarCpf()
+        public void ListarCpfRestringido()
         {
-            Console.WriteLine(" Digite o CPF para ser verificado: ");
-            Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
-            string caminho = Caminho;
+            int opc = 2;
 
-            foreach (string linha in File.ReadLines(caminho))
-            {
-                if (linha.Contains(Cpf))
-                {
-                    Console.WriteLine(" Este CPF ja esta restrito\n Tecle enter para continuar");
-                    Console.ReadKey();
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine(" Esse CPF não está restrito");
-                }
+                Console.Clear();
+                Console.WriteLine(" Lista de CPF restingido ");
 
-            }
+                string query = $"SELECT CPF FROM Restrito ";
+
+                conexaoBD.Select(query,opc);
+
+               
         }
         public void AddRestricaoCpf()
         {
@@ -91,10 +86,13 @@ namespace ProjetoOnTheFly
                 if (validar)
                 {
 
-                    string caminho = Caminho;
-                    string texto = $"{ToString()}\n";
-                    File.AppendAllText(caminho, texto);
-                    Console.WriteLine("\n CPF foi adicionado a lista de restringido");
+                    
+
+                    string query= $"INSERT INTO Restrito (CPF) VALUES('{Cpf}')";
+
+                    conexaoBD.Insert(query);
+
+                    Console.WriteLine($"\n CPF '{Cpf}' foi restringido\n Pressione ENTER para continuar");
                     Console.ReadKey();
                 }
                 else if (validar == false)
@@ -109,25 +107,32 @@ namespace ProjetoOnTheFly
 
         public void RetirarRestricaoCpf()
         {
-            Console.WriteLine(" Digite o CPF para verificar: ");
-            Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
-            string caminho = Caminho;
-            List<string> retRest = new();
+            bool validar;
 
-            foreach (string linha in File.ReadLines(caminho))
+            do
             {
-                retRest.Add(linha);
-            }
-            for (int i = 0; i < retRest.Count; i++)
-            {
-                if (retRest[i].Contains(Cpf))
+                Console.WriteLine(" Digite o CPF que sera bloqueado");
+                Cpf = Console.ReadLine().Replace(".", "").Replace("-", "");
+                validar = ValidarCPF(Cpf);
+                if (validar)
                 {
-                    retRest.RemoveAt(i);
-                    Console.WriteLine("Retirada a restrição do CPF com sucesso");
+
+
+
+                    string query = $"DELETE FROM Restrito WHERE CPF=('{Cpf}')";
+
+                    conexaoBD.Insert(query);
+
+                    Console.WriteLine($"\n Foi retirado a restrição do '{Cpf}' \n Pressione ENTER para continuar");
                     Console.ReadKey();
                 }
-            }
-            File.WriteAllLines(Caminho, retRest.ToArray());
+                else if (validar == false)
+                {
+                    Console.WriteLine(" CPF invalido");
+
+                    Console.WriteLine(" Digite um CPF valido\n");
+                }
+            } while (validar == false);
         }
 
 
